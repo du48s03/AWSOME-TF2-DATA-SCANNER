@@ -11,10 +11,9 @@ In this part of the project, you will complete the web application by building t
 on top of the `Flask` Python webserver.  For those students doing Option 3.b, instructions are below.
 
 
-* [FAQs](#frequently-asked-questions)
-* [Project overview](overview.md)
-* If your teammate has dropped the class, [see the contingency plan](part1.md#contingency)
-* For any questions about collaboration, [see the Syllabus](../../Syllabus.md#cheating)
+* [Project overview](http://github.com/w4111/proj1)
+* If your teammate has dropped the class, [see the contingency plan](http://github.com/w4111/proj1part1#contingency)
+* For any questions about collaboration, [see the Syllabus](http://github.com/w4111/syllabus#cheating)
   * If there are questions of general interest, please post to piazza.
 
 
@@ -55,9 +54,10 @@ The following documentation may be helpful for you:
 ### Deployment
 
 
+
 Once you are happy with your web application, you will want to deploy it to your Azure virtual machine:
 
-1. [Open a port on your machine so the world can access it](../../hws/azure_port.pdf).  Remember the port number
+1. [Open a port on your machine so the world can access it](http://github.com/w4111/syllabus/azure_port.pdf).  Remember the port number
 
 1. Write down the url of your virtual machine.  It should be `<MACHINE NAME>.cloudapp.net`
 
@@ -104,7 +104,7 @@ Grading
 
 # Option 3.b: Extending The Design
 
-Follow the expansion plans you described in [Part 1](part1.md), namely:
+Follow the expansion plans you described in [Part 1](http://github.com/w4111/proj1part1), namely:
 
 1. Extend the ER diagram: more entity sets, more relationship sets, more constraints.  Same as part 1
 
@@ -115,7 +115,7 @@ Follow the expansion plans you described in [Part 1](part1.md), namely:
 
 ### Submission
 
-Follow the [same submission instructions as Part 2](part2.md#submit) (this is a foreign reference!)
+Follow the [same submission instructions as Part 2](http://github.com/w4111/proj1part2#submit) (this is a foreign reference!)
 with the following differences:
 
 * The folder should be named `<YOUR UNI>-proj1part3` (note it's part3 instead of part2)
@@ -123,5 +123,5 @@ with the following differences:
 * Submit to "Project 1, Part 3" on courseworks
 
 
-Grading will be same as [the grading criteria in Part 2](part2.md#grading), but for your extended design instead of the original.
+Grading will be same as [the grading criteria in Part 2](http://github.com/w4111/proj1part2#grading), but for your extended design instead of the original.
 
