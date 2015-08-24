@@ -57,7 +57,7 @@ The following documentation may be helpful for you:
 
 Once you are happy with your web application, you will want to deploy it to your Azure virtual machine:
 
-1. [Open a port on your machine so the world can access it](http://github.com/w4111/syllabus/azure_port.pdf).  Remember the port number
+1. [Open a port on your machine so the world can access it](http://github.com/w4111/syllabus/blob/master/azure_port.pdf).  Remember the port number
 
 1. Write down the url of your virtual machine.  It should be `<MACHINE NAME>.cloudapp.net`
 
