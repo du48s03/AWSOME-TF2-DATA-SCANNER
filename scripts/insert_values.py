@@ -11,15 +11,16 @@ OUTPUT = open(outfilename, 'w')
 tablename = f.readline()[:-1]
 attrnames = f.readline()[:-1]
 attrs = attrnames.split(',')
-print(attrs)
 for line in f:
+	if(len(line)==1):
+		break;
 	data = line[:-1].split(',')
 	OUTPUT.write('INSERT INTO '+tablename+'(')
 	for x in xrange(0, len(attrs)-1):
 		OUTPUT.write(attrs[x]+',')
 	OUTPUT.write(attrs[-1])
 	OUTPUT.write(') VALUES(')
-	for x in xrange(0, len(data)):
+	for x in xrange(0, len(data)-1):
 		OUTPUT.write(data[x]+',')
 	OUTPUT.write(data[-1])
 	OUTPUT.write(');\n')
