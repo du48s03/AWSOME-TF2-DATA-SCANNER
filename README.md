@@ -1,10 +1,8 @@
 # Project 1, Part 3
 
-Assigned:
-
-Due: 
-
-(worth 25% of overall Project 1 grade)
+* Assigned: Oct-19
+* Due:  Nov-11
+* (worth 25% of overall Project 1 grade)
 
 
 In this part of the project, you will complete the web application by building the front end
@@ -58,9 +56,6 @@ You will need to connect to your database used for part 2.
   changes from GitHub.com
 
         git pull
-
-
-        git clone git@github.com:w4111/proj1part3.git
 
 Some notes
 
