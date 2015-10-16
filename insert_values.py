@@ -3,9 +3,15 @@
 #The second line contains the attribute names, separated by commas. 
 #The following lines contains the data, seperated by commas. 
 import sys
+import subprocess
 
 infilename = sys.argv[1]
 outfilename = sys.argv[2]
+
+user = "lch2135"
+host = "w4111db1.cloudapp.net"
+db = "proj1part2"
+
 f = open(infilename, 'r')
 OUTPUT = open(outfilename, 'w')
 tablename = f.readline()[:-1]
@@ -25,4 +31,4 @@ for line in f:
 	OUTPUT.write(data[-1])
 	OUTPUT.write(');\n')
 
-
+#print subprocess.check_output(["psql", "-U", user, "-h", host, db, "-a", "-f", outfilename], stderr=subprocess.STDOUT)
