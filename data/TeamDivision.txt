@@ -10,6 +10,7 @@ team,league,division
 '-bird noises-','ESEA','Open'
 'Back to the Lab Again','ESEA','Open'
 'MenaceToSociety','UGC','Platinum'
+'Kids Next Door','UGC','Platinum'
 'LEGO Rock Raiders','UGC','Gold'
 'Quadacious & The Fozars','UGC','Gold'
 'Reason Gaming','ETF2L','Premiership'
