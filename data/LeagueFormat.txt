@@ -1,0 +1,9 @@
+LeagueFormat
+league,format
+'ESEA','6v6'
+'ETF2L','6v6'
+'ETF2L','highlander'
+'UGC','6v6'
+'UGC','highlander'
+'UGC','4v4'
+
