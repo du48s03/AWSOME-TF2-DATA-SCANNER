@@ -1,3 +1,0 @@
-INSERT INTO League(name) VALUES('UGC');
-INSERT INTO League(name) VALUES('ESEA');
-INSERT INTO League(name) VALUES('ETF2L');
