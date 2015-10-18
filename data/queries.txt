@@ -1,0 +1,28 @@
+Average damage of players of [class] in highest division from all leagues
+
+SELECT AVG(PlaysFormat.damagePerMin) FROM (
+	SELECT PlaysOn.player,LD.league FROM (
+		SELECT * FROM TeamDivision as TD
+		INNER JOIN LeagueDivision as LD
+		ON TD.division=LD.division
+		WHERE LD.rank=1 ) AS TopTeams
+	INNER JOIN PlaysOn ON TopTeams.team=PlaysOn.team ) AS TopPlayers
+INNER JOIN PlaysFormat ON PlaysFormat.playerID=TopPlayers.player
+WHERE PlaysFormat.class = [class]
+GROUP BY LD.league
+
+
+Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
+
+SELECT AVG(PF.healsPerMin), AVG(PF.ubers/PF.drops)
+FROM PlaysFormat PF
+WHERE class='medic'
+GROUP BY PF.format
+
+
+Correlation between damage per minute of demoman and heals per minute of medic
+
+SELECT (AVG(Med.healsPerMin*Dem.damagePerMin)-AVG(Med.healsPerMin)*AVG(Dem.damagePerMin)/(STDDEV(Med.healsPerMin)*STDDEV(Dem.damagePerMin)))
+FROM (SELECT * FROM PlaysOn,PlaysFormat WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class="medic")as Med, 
+	(SELECT * FROM PlaysOn,PlaysFormat WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class="demoman")as Dem
+WHERE Med.team=Dem.team 
