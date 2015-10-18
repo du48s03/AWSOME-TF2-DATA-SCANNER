@@ -123,4 +123,6 @@ name,id
 'digitalstyle','U:1:232474991'
 'indianapolis','U:1:36571601'
 'moffles','U:1:106815041'
+'Scorp','U:1:65371015'
+'Jordan','U:1:54968189'
 
