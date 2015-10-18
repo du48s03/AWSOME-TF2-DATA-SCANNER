@@ -31,7 +31,7 @@ playerID,class,format,kills,assists,deaths,kad,healsPerMin,damagePerMin,ubers,dr
 'U:1:234572','scout','6v6',917,393,408,3.2,null,326.9,null,null
 'U:1:42669671','scout','6v6',
 'U:1:49056203','demoman','6v6',
-'U:1:31,'medic','6v6',31,359,265,1.5,815.7,null,236,16
+'U:1:54738661,'medic','6v6',31,359,265,1.5,815.7,null,236,16
 'U:1:69115311','soldier','6v6',1407,326,498,3.5,null,443.9,null,null
 'U:1:84161969','soldier','6v6',94,26,47,2.6,null,412.0,null,null
 'U:1:14334911','soldier','6v6',275,40,126,2.5,null,450.6,null,null
