@@ -91,7 +91,7 @@ name,id
 'arekk12','U:1:93699014'
 'postmalone','U:1:66361304'
 'avast','U:1:56395697'
-'connor','U:1:86689097
+'connor','U:1:86689097'
 'yeeegz','U:1:33933728'
 'bl4nk','U:1:12908625'
 'slamberg','U:1:9240250'

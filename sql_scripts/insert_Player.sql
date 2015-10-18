@@ -89,7 +89,7 @@ INSERT INTO Player(name,id) VALUES('Linkuser','U:1:61690781');
 INSERT INTO Player(name,id) VALUES('arekk12','U:1:93699014');
 INSERT INTO Player(name,id) VALUES('postmalone','U:1:66361304');
 INSERT INTO Player(name,id) VALUES('avast','U:1:56395697');
-INSERT INTO Player(name,id) VALUES('connor','U:1:86689097);
+INSERT INTO Player(name,id) VALUES('connor','U:1:86689097');
 INSERT INTO Player(name,id) VALUES('yeeegz','U:1:33933728');
 INSERT INTO Player(name,id) VALUES('bl4nk','U:1:12908625');
 INSERT INTO Player(name,id) VALUES('slamberg','U:1:9240250');
