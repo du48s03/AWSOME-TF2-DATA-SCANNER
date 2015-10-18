@@ -1,33 +1,33 @@
 CREATE TABLE Player(
    name text NOT NULL,
    id text NOT NULL,
-   UNIQUE(id)
+   PRIMARY KEY(id)
 );
 
 CREATE TABLE League(
    name text NOT NULL,
-   UNIQUE(name)
+   PRIMARY KEY(name)
 );
 
 CREATE TABLE Format(
    name text NOT NULL,
-   UNIQUE(name)
+   PRIMARY KEY(name)
 );
 
 CREATE TABLE Division(
    name text NOT NULL,
-   UNIQUE(name)
+   PRIMARY KEY(name)
 );
 
 CREATE TABLE Team(
    name text NOT NULL,
    id int NOT NULL,
-   UNIQUE(id)
+   PRIMARY KEY(id)
 );
 
 CREATE TABLE Class(
    name text NOT NULL,
-   UNIQUE(name)
+   PRIMARY KEY(name)
 );
 
 CREATE TABLE PlaysOn(
@@ -35,7 +35,7 @@ CREATE TABLE PlaysOn(
    team int NOT NULL, 
    FOREIGN KEY(player) REFERENCES Player(id),
    FOREIGN KEY(team) REFERENCES Team(id),
-   UNIQUE(player, team)
+   PRIMARY KEY(player, team)
 );
 
 CREATE TABLE TeamFormat(
@@ -43,7 +43,7 @@ CREATE TABLE TeamFormat(
    format text NOT NULL,
    FOREIGN KEY(team) REFERENCES team(id),
    FOREIGN KEY(format) REFERENCES format(name),
-   UNIQUE(team, format)
+   PRIMARY KEY(team, format)
 );
 
 CREATE TABLE LeagueDivision(
@@ -52,7 +52,7 @@ CREATE TABLE LeagueDivision(
    rank int NOT NULL,
    FOREIGN KEY(league) REFERENCES League(name),
    FOREIGN KEY(division) REFERENCES Division(name),
-   UNIQUE(league,division)
+   PRIMARY KEY(league,division)
 );
 
 CREATE TABLE LeagueFormat(
@@ -60,7 +60,7 @@ CREATE TABLE LeagueFormat(
    format text NOT NULL,
    FOREIGN KEY(league) REFERENCES League(name),
    FOREIGN KEY(format) REFERENCES Format(name),
-   UNIQUE(league, format)
+   PRIMARY KEY(league, format)
 );
 
 CREATE TABLE PlaysFormat(
@@ -78,7 +78,7 @@ CREATE TABLE PlaysFormat(
    FOREIGN KEY(playerID) REFERENCES Player(id),
    FOREIGN KEY(class) REFERENCES Class(name),
    FOREIGN KEY(format) REFERENCES Format(name),
-   UNIQUE(playerID, class, format)
+   PRIMARY KEY(playerID, class, format)
 );
 
 CREATE TABLE TeamDivision(
@@ -87,5 +87,5 @@ CREATE TABLE TeamDivision(
    league text NOT NULL,
    FOREIGN KEY(team) REFERENCES Team(id),
    FOREIGN KEY(league,division) REFERENCES LeagueDivision(league,division),
-   UNIQUE(team,division,league)
+   PRIMARY KEY(team,division,league)
 );
