@@ -1,0 +1,12 @@
+Class
+name
+'scout'
+'pyro'
+'soldier'
+'demoman'
+'engineer'
+'heavy'
+'medic'
+'sniper'
+'spy'
+
