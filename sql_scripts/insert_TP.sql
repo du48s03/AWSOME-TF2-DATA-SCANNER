@@ -91,7 +91,7 @@ INSERT INTO PlaysOn(team,player) VALUES(14,'U:1:61690781');
 INSERT INTO PlaysOn(team,player) VALUES(14,'U:1:93699014');
 INSERT INTO PlaysOn(team,player) VALUES(14,'U:1:66361304');
 INSERT INTO PlaysOn(team,player) VALUES(14,'U:1:56395697');
-INSERT INTO PlaysOn(team,player) VALUES(14,'U:1:86689097);
+INSERT INTO PlaysOn(team,player) VALUES(14,'U:1:86689097');
 INSERT INTO PlaysOn(team,player) VALUES(15,'U:1:33933728');
 INSERT INTO PlaysOn(team,player) VALUES(15,'U:1:12908625');
 INSERT INTO PlaysOn(team,player) VALUES(15,'U:1:9240250');
