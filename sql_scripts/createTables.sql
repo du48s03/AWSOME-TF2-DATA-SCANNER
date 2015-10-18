@@ -64,7 +64,7 @@ CREATE TABLE LeagueFormat(
 );
 
 CREATE TABLE PlaysFormat(
-   playerID text NOT NULL,
+   player text NOT NULL,
    class text NOT NULL,
    format text NOT NULL, 
    kills int,

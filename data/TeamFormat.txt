@@ -1,5 +1,5 @@
 TeamFormat
-name,format
+team,format
 1,'6v6'
 2,'6v6'
 3,'6v6'
