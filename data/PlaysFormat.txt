@@ -43,8 +43,8 @@ player,class,format,kills,assists,deaths,kad,healsPerMin,damagePerMin,ubers,drop
 'U:1:33652944','scout','highlander',47,16,34,1.9,null,307.8,null,null
 'U:1:114038341','demoman','highlander',3266,843,1460,2.8,null,548.8,null,null
 'U:1:70546868','medic','highlander',25,165,65,2.9,596.4,null,141,7
-'U:1:62606893','medic','highlander',452,2047,865,908.9,null,997,35
-'U:1:75423790','engineer','highlander',158,73,81,2.9,null,314.8
+'U:1:62606893','medic','highlander',452,2047,865,2.9,908.9,null,997,35
+'U:1:75423790','engineer','highlander',158,73,81,2.9,null,314.8,null,null
 'U:1:21365971','medic','highlander',10,28,8,4.8,886.6,null,8,2
 'U:1:21365971','soldier','highlander',67,16,20,4.2,null,434.0,null,null
 'U:1:79625875','sniper','highlander',8299,955,3275,2.8,null,445.0,null,null
