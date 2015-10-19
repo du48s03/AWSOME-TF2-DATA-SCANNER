@@ -22,7 +22,17 @@ GROUP BY PF.format;
 
 Correlation between damage per minute of demoman and heals per minute of medic
 
-SELECT (AVG(Med.healsPerMin*Dem.damagePerMin)-AVG(Med.healsPerMin)*AVG(Dem.damagePerMin)/(STDDEV(Med.healsPerMin)*STDDEV(Dem.damagePerMin)))
-FROM (SELECT * FROM PlaysOn,PlaysFormat WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class="medic")as Med, 
-	(SELECT * FROM PlaysOn,PlaysFormat WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class="demoman")as Dem
-WHERE Med.team=Dem.team 
+SELECT 	AVG(Med.healsPerMin) AS HPM_avg, 
+	AVG(Dem.damagePerMin) AS DMP_avg, 
+	STDDEV(Med.healsPermin) AS HPM_dev, 
+	STDDEV(Dem.damagePerMin) AS DPM_dev, 
+	(AVG(Med.healsPerMin*Dem.damagePerMin)-AVG(Med.healsPerMin)*AVG(Dem.damagePerMin))/STDDEV(Dem.damagePerMin)/STDDEV(Med.healsPerMin) AS cov_coeff
+FROM    (SELECT PlaysOn.team AS team, PlaysFormat.healsPerMin AS healsPerMin 
+	FROM PlaysOn,PlaysFormat 
+	WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='medic'
+	)AS Med,
+	(SELECT PlaysOn.team AS team, PlaysFormat.damagePerMin AS damagePerMin 
+	FROM PlaysOn,PlaysFormat 
+	WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='demoman'
+	) AS Dem
+WHERE Med.team=Dem.team AND Med.healsPerMin IS NOT NULL AND Dem.damagePerMin IS NOT NULL;
