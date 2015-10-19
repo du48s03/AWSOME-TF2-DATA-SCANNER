@@ -85,13 +85,17 @@ So if this is running on your laptop, you can open you web browser to any of the
         http://127.0.0.1:8111
         http://localhost:8111
 
+**note**: This is just a *mild suggestion*, we are not saying you should or must develop this way!
+This is because if you encounter installation or other issues when developing locally, 
+there is so much variety between student computing environments that the staff is ill-equipped to 
+debug every case over email/piazza.  Your best bet is google, office hours, or asking your fellow students on piazza.
 
 ### Deployment
 
 
 Once you are happy with your web application, you will deploy it to your Azure virtual machine:
 
-1. [Open a port (e.g., 8000) on your VM so the world can access it](http://github.com/w4111/syllabus/blob/master/azure_port.pdf).  Remember the port number
+1. [Open a port (e.g., 8111 or another port of your liking) on your VM so the world can access it](http://github.com/w4111/syllabus/blob/master/azure_port.pdf).  Remember the port number
 
 1. Write down the url of your virtual machine.  It should be `<MACHINE NAME>.cloudapp.net`
 
