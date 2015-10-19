@@ -1,15 +1,16 @@
 Average damage of players of [class] in highest division from all leagues
 
-SELECT AVG(PlaysFormat.damagepermin) FROM (
-	SELECT playson.player,LD.league FROM (
-		SELECT * FROM TeamDivision as TD
-		INNER JOIN LeagueDivision as LD
-		ON TD.division=LD.division
-		WHERE LD.rank=1 ) AS TopTeams
-	INNER JOIN PlaysOn ON TopTeams.team=PlaysOn.team ) AS TopPlayers
-INNER JOIN PlaysFormat ON PlaysFormat.playerID=TopPlayers.player
-WHERE PlaysFormat.class = 'demoman'
-GROUP BY LD.league
+SELECT TopPlayers.league, AVG(PlaysFormat.damagepermin) FROM (
+        SELECT PlaysOn.player,TopTeams.league FROM (
+                SELECT TD.team, TD.league
+                FROM TeamDivision as TD
+                INNER JOIN LeagueDivision as LD
+                ON TD.division=LD.division AND TD.league=LD.league
+                WHERE LD.rank=1 ) AS TopTeams
+        INNER JOIN PlaysOn ON TopTeams.team=PlaysOn.team ) AS TopPlayers
+INNER JOIN PlaysFormat ON PlaysFormat.player=TopPlayers.player
+WHERE PlaysFormat.class = 'demoman' AND PlaysFormat.damagePerMin IS NOT NULL
+GROUP BY TopPlayers.league;
 
 
 Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
@@ -23,16 +24,16 @@ GROUP BY PF.format;
 Correlation between damage per minute of demoman and heals per minute of medic
 
 SELECT 	AVG(Med.healsPerMin) AS HPM_avg, 
-	AVG(Dem.damagePerMin) AS DMP_avg, 
-	STDDEV(Med.healsPermin) AS HPM_dev, 
-	STDDEV(Dem.damagePerMin) AS DPM_dev, 
-	(AVG(Med.healsPerMin*Dem.damagePerMin)-AVG(Med.healsPerMin)*AVG(Dem.damagePerMin))/STDDEV(Dem.damagePerMin)/STDDEV(Med.healsPerMin) AS cov_coeff
+        AVG(Dem.damagePerMin) AS DMP_avg, 
+        STDDEV(Med.healsPermin) AS HPM_dev, 
+        STDDEV(Dem.damagePerMin) AS DPM_dev, 
+        (AVG(Med.healsPerMin*Dem.damagePerMin)-AVG(Med.healsPerMin)*AVG(Dem.damagePerMin))/STDDEV(Dem.damagePerMin)/STDDEV(Med.healsPerMin) AS cov_coeff
 FROM    (SELECT PlaysOn.team AS team, PlaysFormat.healsPerMin AS healsPerMin 
-	FROM PlaysOn,PlaysFormat 
-	WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='medic'
-	)AS Med,
-	(SELECT PlaysOn.team AS team, PlaysFormat.damagePerMin AS damagePerMin 
-	FROM PlaysOn,PlaysFormat 
-	WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='demoman'
-	) AS Dem
+        FROM PlaysOn,PlaysFormat 
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='medic'
+        )AS Med,
+        (SELECT PlaysOn.team AS team, PlaysFormat.damagePerMin AS damagePerMin 
+        FROM PlaysOn,PlaysFormat 
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='demoman'
+        ) AS Dem
 WHERE Med.team=Dem.team AND Med.healsPerMin IS NOT NULL AND Dem.damagePerMin IS NOT NULL;
