@@ -75,7 +75,7 @@ CREATE TABLE PlaysFormat(
    damagePerMin float,
    ubers int,
    drops int,
-   FOREIGN KEY(playerID) REFERENCES Player(id),
+   FOREIGN KEY(player) REFERENCES Player(id),
    FOREIGN KEY(class) REFERENCES Class(name),
    FOREIGN KEY(format) REFERENCES Format(name),
    PRIMARY KEY(playerID, class, format)
