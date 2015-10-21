@@ -33,8 +33,84 @@ Your job is to implement your proposed web application.  To help you out,
 we have provided a bare-bones Flask web application in [./webserver/](./webserver/).
 It provides code that connects to a database url, and a default index page.
 
+We use a python package called `SQLAlchemy` to simplify our work for connecting to the database.
+For example, `server.py` contains the following code to load useful functions from
+the package:
+
+        # import useful functions from the package
+        from sqlalchemy import *
+
+`SQLAlchemy` is able to connect to many different types of DBMSes such as 
+SQLite, PostgreSQL, MySQL, Oracle and other databases.  Each such DBMS
+is called an "engine".  The `create_engine()` function sets up the configuration
+to specify which type of DBMS we want to connect to, and what their parameters are.
+
+        engine = create_engine(DATABASEURI)
+
+
+Given an engine, we can then connect to it (this is similar to how `psql` connects
+to the staff database).
+
+        conn = engine.connect()
+
+At this point, the `conn` connection object can be used to
+execute queries to the database.  This is basically what `psql`
+is doing under the covers!  
+
+        cursor = conn.execute("select 1")
+
+The `execute` function takes a SQL query string as input, and
+returns a `cursor` object.  You can think of this as an iterator 
+over the result relation.  This is because if you run `select *` 
+on a million row table, the entire result isn't sent to your
+program at once (you could run out of memory).  Instead, this
+object lets you treat the result as an iterator and call `.next()`
+on it, or loop through it.  [See the documentation for a detailsed description](http://docs.sqlalchemy.org/en/latest/core/connections.html#sqlalchemy.engine.ResultProxy).
+
+        # this fetches the first row if called right after
+        # the execute function above.  It also moves the
+        # iterator to the next result row.
+        record = cursor.fetchone()
+
+        # this will fetch the next record, or None if
+        # there are no more results.
+        second_record = cursor.fetchone()
+
+        # this loops through the results of the cursor one by one
+        for row in cursor:
+          print list(row)
+
+
+The above description is a way to directly write and run SQL
+queries as strings, and directly manipulate the result relations.
+SQLAlchemy is also an [Object Relational Mapper](https://en.m.wikipedia.org/wiki/Object-relational_mapping)
+that provides an interface that hides SQL query strings and 
+result sets from you.  Instead you access and manipulate
+tables in the database as if they were normal Python objects.
+
+**In this project, you will directly write and run SQL queries, 
+and will not use any ORM functionality.**
+
 Take a look at the comments in `server.py` to see how to use modify the server.
 You will need to connect to your database used for part 2.
+
+
+### Technical Requirments
+
+* Application directly runs SQL query strings without using the ORM to
+  connect to and execute queries on the provided staff database.
+  * Part of this project is to give you practice writing, debugging, and
+    running SQL queries, so tools that shield you from doing this are not
+    permitted.
+* Web application is written using the Flask framework
+* Javascript, CSS, use of advanced SQL features are permitted.
+  * In general, make your applications as fancy as you want.  
+    If you are unsure if a library is permitted, ask a staff member or on piazza.
+* Your application should prevent forms of SQL injection described in lecture.
+
+Note: if you anticipate doing a huge number of queries (say hundreds of queries per second), 
+or will have a huge database (more than 10k rows),
+please let the staff know so we can allocate resources appropriately.
 
 ### Getting started and working with GitHub
 
