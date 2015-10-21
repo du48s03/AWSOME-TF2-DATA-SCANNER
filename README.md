@@ -2,7 +2,7 @@
 
 * Assigned: Oct-19
 * Due:  Nov-11
-* (worth 25% of overall Project 1 grade)
+* (worth 50% of overall Project 1 grade)
 
 
 In this part of the project, you will complete the web application by building the front end
