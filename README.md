@@ -33,6 +33,13 @@ Your job is to implement your proposed web application.  To help you out,
 we have provided a bare-bones Flask web application in [./webserver/](./webserver/).
 It provides code that connects to a database url, and a default index page.
 
+Take a look at the comments in `server.py` to see how to use modify the server.
+You will need to connect to your database used for part 2.
+
+
+
+### A Short Introduction to SQLAlchemy
+
 We use a python package called `SQLAlchemy` to simplify our work for connecting to the database.
 For example, `server.py` contains the following code to load useful functions from
 the package:
@@ -91,11 +98,17 @@ tables in the database as if they were normal Python objects.
 **In this project, you will directly write and run SQL queries, 
 and will not use any ORM functionality.**
 
-Take a look at the comments in `server.py` to see how to use modify the server.
-You will need to connect to your database used for part 2.
+
 
 
 ### Technical Requirments
+
+Part of your task is to learn how to read documentation, write and run a 
+database-backed web application, so we expect that you will use resources available
+on the internet to help debug or learn about the necessary packages and technologies.
+Ask staff members after you have already attempted a valiant effort at debugging errors.
+The technical requirements are as follows:
+
 
 * Application directly runs SQL query strings without using the ORM to
   connect to and execute queries on the provided staff database.
