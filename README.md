@@ -1,7 +1,7 @@
 # Project 1, Part 3
 
 * Assigned: Oct-19
-* Due:  Nov-11
+* Due:  Nov-16
 * (worth 50% of overall Project 1 grade)
 
 
