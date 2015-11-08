@@ -21,5 +21,12 @@
 	<form>
 	<br><br>
 	<a href="general_query.html">Clean Up</a>
+	
+	<!-- RESULTS BELOW -->
+	<table>
+	{% for n in data %}
+	<tr><td>{{n.name}}</td></tr>
+	{% endfor %}
+	</table>
 </body>
 </html>
