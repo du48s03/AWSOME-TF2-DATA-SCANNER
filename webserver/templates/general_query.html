@@ -4,6 +4,22 @@
 	<link rel="stylesheet" type="text/css" href="styling.css" />
 </head>
 <body>
-	yay
+	<form>
+		Query for: 
+		<select name="entity">
+			<option value="player">Players</option>
+			<option value="team">Teams</option>
+		</select>
+		<br>
+		Attribute: 
+		<select name="attr">
+			<option value="name">Name</option>
+			<option value="id">ID</option>
+		</select>
+		<input type="text" name="attr_val" />
+		<input type="submit" value="Submit" />
+	<form>
+	<br><br>
+	<a href="general_query.html">Clean Up</a>
 </body>
 </html>
