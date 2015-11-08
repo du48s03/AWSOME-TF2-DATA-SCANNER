@@ -116,14 +116,16 @@ def teardown_request(exception):
 # see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 # 
-@app.route("/general_query/", methods=["POST", "GET"])
+@app.route("/hello/", methods=["POST", "GET"])
 def myappfunction():
 
-  return render_template("general_query.html")
-
-
-
-
+  print request.args
+  print "\n"
+  if int(request.args['age']) < 50:
+    return render_template("index.html", title="blahhhhhh")
+  else: 
+    return "boy you are old."  
+  return "hello world"
 
 @app.route('/', methods=["POST", "GET"])
 def index():
@@ -138,17 +140,17 @@ def index():
   """
 
   # DEBUG: this is debugging code to see what request looks like
-  #print request.args
+  print request.args
 
 
   #
   # example of a database query
   #
-  #cursor = g.conn.execute("SELECT name FROM team")
-  #names = []
-  #for result in cursor:
-  #  names.append(result['name'])  # can also be accessed using result[0]
-  #cursor.close()
+  cursor = g.conn.execute("SELECT name FROM team")
+  names = []
+  for result in cursor:
+    names.append(result['name'])  # can also be accessed using result[0]
+  cursor.close()
 
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
@@ -176,14 +178,14 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  #context = dict( data = names )
+  context = dict( data = names )
 
 
   #
   # render_template looks in the templates/ folder for files.
   # for example, the below file reads template/index.html
   #
-  return render_template("index.html")
+  return render_template("index2.html", **context)
 
 #
 # This is an example of a different path.  You can see it at
