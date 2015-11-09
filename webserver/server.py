@@ -120,10 +120,18 @@ def teardown_request(exception):
 def myappfunction():
   #keys(request.args) = ['attr', 'attr_val', 'entity', 'results']
   print "hello"
-  print request.args
+  
+  context = dict([])
+  context['data']= []
+  if (request.method == 'POST'):
+    print request.form
+    print request.args
+    #print request.args['attr']
+    ###TODO: actually get data from the DB here
+    
+    context['data'] = [{'name':'p1'}, {'name':'p2'}, {'name':'p3'}]
 
-
-  return render_template('general_query.html')
+  return render_template('general_query.html', **context)
 
 
 
@@ -138,7 +146,6 @@ def index():
 
   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
   """
-
  
   return render_template("index.html")
 
