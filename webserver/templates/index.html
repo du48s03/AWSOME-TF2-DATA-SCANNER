@@ -18,7 +18,9 @@
 	<!-- TEST JAVASCRIPT HERE -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
 	<script>
-		$("button").click(function(){
+	$(document).ready(function() {
+		$("button").click(function() {
+			console.log("hello this function ran and is supposed to do stuff");
 			$.ajax({
 			  type: 'POST',
 			  url: '/test/',
@@ -28,6 +30,7 @@
 			  }
 			});
 		});
+	});
 	</script>
 </body>
 </html>
