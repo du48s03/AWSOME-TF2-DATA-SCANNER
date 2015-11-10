@@ -135,6 +135,15 @@ def myappfunction():
 
 
 
+@app.route('/test/', methods=["POST", "GET"])
+def return_test():
+  """
+  """
+   
+  return render_template("Hello Squeaky!!")
+
+
+
 @app.route('/', methods=["POST", "GET"])
 def index():
   """
