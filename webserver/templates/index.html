@@ -10,5 +10,18 @@
 		<td>Comparisons</td>
 	</tr>
 	</table>
+	<br><br>
+	<div id="testing">TEXTTEXTTEXT</div>
+	<!-- TEST JAVASCRIPT HERE -->
+	<script>
+		$.ajax({
+		  type: 'POST',
+		  url: '/test/',
+		  data: {},
+		  success: function(msg) {
+			document.getElementById("testing").innerHTML = msg;
+		  }
+		});
+	</script>
 </body>
 </html>
