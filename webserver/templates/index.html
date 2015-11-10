@@ -13,21 +13,21 @@
 	<br><br>
 	<div id="testing">
 		TEXTTEXTTEXT
-		<button onclick="test()">Click</button>
+		<button>Click</button>
 	</div>
 	<!-- TEST JAVASCRIPT HERE -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
 	<script>
-		function test() {
+		$("button").click(function(){
 			$.ajax({
 			  type: 'POST',
 			  url: '/test/',
 			  data: {},
 			  success: function(msg) {
-				document.getElementById("testing").innerHTML = msg;
+				$("#testing").html(msg);
 			  }
 			});
-		};
+		});
 	</script>
 </body>
 </html>
