@@ -11,17 +11,22 @@
 	</tr>
 	</table>
 	<br><br>
-	<div id="testing">TEXTTEXTTEXT</div>
+	<div id="testing">
+		TEXTTEXTTEXT
+		<button onclick="test()">Click</button>
+	</div>
 	<!-- TEST JAVASCRIPT HERE -->
 	<script>
-		$.ajax({
-		  type: 'POST',
-		  url: '/test/',
-		  data: {},
-		  success: function(msg) {
-			document.getElementById("testing").innerHTML = msg;
-		  }
-		});
+		function test() {
+			$.ajax({
+			  type: 'POST',
+			  url: '/test/',
+			  data: {},
+			  success: function(msg) {
+				document.getElementById("testing").innerHTML = msg;
+			  }
+			});
+		}
 	</script>
 </body>
 </html>
