@@ -8,7 +8,9 @@
 	$(document).ready(function(){
 		$("button").click(function(){
 			$.ajax({
+				type: "POST",
 				url: "/test/",
+				data: {"text":document.getElementById("user_input").value}
 				success: function(result){
 				$("#testing").html(result);
 			}});
@@ -24,10 +26,10 @@
 	</tr>
 	</table>
 	<br><br>
+	<!-- TESTING THINGS BELOW -->
 	<div id="testing">
-		TEXTTEXTTEXT
+		BOXBOXBOX: <input type="text" id="user_input" />
 	</div>
 	<button>Click</button>
-	
 </body>
 </html>
