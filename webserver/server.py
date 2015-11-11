@@ -20,7 +20,8 @@ eugene wu 2015
 import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
-from flask import Flask, request, render_template, g, redirect, Response
+from flask import Flask, request, render_template, g, redirect, Response, jsonify
+import utils
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -103,7 +104,12 @@ def teardown_request(exception):
     pass
 
 
-#
+@app.route("/general_query/", methods=["POST", "GET"])
+def view_general_query():
+  context = {}
+  context['data'] = [{'name':'p1'}, {'name':'p2'}, {'name':'pkoko'}]
+  return render_template('general_query.html', **context)
+
 # @app.route is a decorator around index() that means:
 #   run index() whenever the user tries to access the "/" path using a POST or GET request
 #
@@ -115,23 +121,73 @@ def teardown_request(exception):
 # 
 # see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
-# 
-@app.route("/general_query/", methods=["POST", "GET"])
-def myappfunction():
+#
+
+@app.route("/player_stats/", methods=["POST", "GET"])
+def view_player_stats():
+  if(request.method == "POST"):
+    attr = request.form['attr']
+    if(attr == 'name'):
+      qrystr = """SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
+FROM player as P, playsformat as F
+WHERE	p.id = F.player
+	AND p.name = '"""+utils.sanitize(request.form['attr_val'])+"""'"""
+    elif(attr == 'id'):
+      qrystr =  """SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
+FROM player as P, playsformat as F
+WHERE	p.id = F.player
+	AND p.id = '"""+utils.sanitize(request.form['attr_val'])+"""'"""
+    else:
+      print "Error: unrecognized attribute "+attr
+      return render_template('player_stats.html')
+
+    rit = g.conn.execute(qrystr)
+    # We assume that the result won't be too big
+    result = {'data':[]}
+    for r in rit:
+      print r
+      result['data'].append({'name':r[0],
+                             'class':r[1],
+                             'format':r[2],
+                             'kills':r[3],
+                             'assists':r[4],
+                             'deaths':r[5],
+                             'kad':r[6],
+                             'healspermin':r[7],
+                             'damagepermin':r[8],
+                             'ubers':r[9],
+                             'drops':r[10]})
+    return jsonify(result)
+  else: 
+    return render_template('player_stats.html')
+
+ 
+@app.route("/complex_query/", methods=["POST", "GET"])
+def view_complex_query():
   #keys(request.args) = ['attr', 'attr_val', 'entity', 'results']
   print "hello"
-  
   context = dict([])
   context['data']= []
-  if (request.method == 'POST'):
-    print request.form
-    print request.args
-    #print request.args['attr']
-    ###TODO: actually get data from the DB here
-    
-    context['data'] = [{'name':'p1'}, {'name':'p2'}, {'name':'p3'}]
-
-  return render_template('general_query.html', **context)
+  if(request.method == "POST"):
+    cls = utils.sanitize(request.form['cls'])
+    print 'cls = ' + cls 
+    qrystr = """SELECT TopPlayers.league, AVG(PlaysFormat.damagepermin) FROM (
+        SELECT PlaysOn.player,TopTeams.league FROM (
+                SELECT TD.team, TD.league
+                FROM TeamDivision as TD
+                INNER JOIN LeagueDivision as LD
+                ON TD.division=LD.division AND TD.league=LD.league
+                WHERE LD.rank=1 ) AS TopTeams
+        INNER JOIN PlaysOn ON TopTeams.team=PlaysOn.team ) AS TopPlayers
+INNER JOIN PlaysFormat ON PlaysFormat.player=TopPlayers.player
+WHERE PlaysFormat.class = '"""+cls+"""' AND PlaysFormat.damagePerMin IS NOT NULL
+GROUP BY TopPlayers.league;"""
+    print qrystr
+    result = g.conn.execute(qrystr)
+    for record in result:
+      print record
+      context['data'].append({'league':str(record[0]), 'val':str(record[1])})
+  return render_template('complex_query.html', **context)
 
 
 
@@ -139,8 +195,10 @@ def myappfunction():
 def return_test():
   """
   """
-   
-  return render_template("Hello Squeaky!!")
+  print "Squeaky sent her regards" 
+
+  print request.form 
+  return "Hello Squeaky"
 
 
 
