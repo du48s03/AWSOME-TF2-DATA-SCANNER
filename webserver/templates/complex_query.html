@@ -40,7 +40,7 @@
 		<button id="class_submit">Submit</button>
 		<div id="test"></div>
 		<!-- Render Results Table -->
-		{% if not(length(data)==0) %}
+		{% if data|length != 0 %}
 		<table>
 		<tr><td>League</td><td>Average DPM</td></tr>
 		{% for n in data %}
