@@ -40,7 +40,8 @@
 		<button id="class_submit">Submit</button>
 		<div id="test"></div>
 		<!-- Render Results Table -->
-		{% if data %}
+		{{data}}
+		<!--{% if data %}
 		Data exists!  {{data|length}}
 		<br>{{data}}
 		{% endif %}
@@ -51,7 +52,7 @@
 		<tr><td>{{n.league}}</td><td>{{n.val}}</td></tr>
 		{% endfor %}
 		</table>
-		{% endif %}
+		{% endif %}-->
 		</td></tr>
 	</table>
 </body>
