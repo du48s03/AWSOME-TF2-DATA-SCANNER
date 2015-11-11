@@ -3,19 +3,15 @@
 	<title>Awesome TF2 Data Scanner</title>
 	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
 	<!-- TEST JAVASCRIPT HERE -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
-	$(document).ready(function() {
-		$("button").click(function() {
-			console.log("hello this function ran and is supposed to do stuff");
+	$(document).ready(function(){
+		$("button").click(function(){
 			$.ajax({
-			  type: 'POST',
-			  url: '/test/',
-			  data: {},
-			  success: function(msg) {
-				$("#testing").html(msg);
-			  }
-			});
+				url: "/test/",
+				success: function(result){
+				$("#testing").html(result);
+			}});
 		});
 	});
 	</script>
