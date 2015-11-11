@@ -10,8 +10,7 @@
 			$.ajax({
 				type: "POST",
 				url: "/test/",
-				data: "plzworkplz",
-				//{txt:"lalalalalalalala"},
+				data: {txt:"lalalalalalalala"},
 				//document.getElementById("user_input").value},
 				success: function(result){
 				$("#testing").html(result);
