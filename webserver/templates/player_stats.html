@@ -1,0 +1,31 @@
+<html>
+<head>
+	<title>Player Stats - Awesome TF2 Data Scanner</title>
+	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("#submit").click(function(){
+			$.ajax({
+				type: "POST",
+				url: "/player_stats/",
+				data: {attr:document.getElementById("attr").value,
+					   attr_val:document.getElementById("attr_val").value},
+				success: function(stats){
+					$("#test").html("testingtesting123");
+			}});
+		});
+	});
+	</script>
+</head>
+<body>
+<h2>Search for Players</h2><br>
+	<div id="results"></div>
+	<select name="attr" id="attr">
+		<option value="name">Name</option>
+		<option value="id">Steam3ID</option>
+	</select>
+	<input type="text" name="attr_val" id="attr_val"/>
+	<button id="submit">Submit</button>
+</body>
+</html>

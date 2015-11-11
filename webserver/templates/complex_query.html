@@ -2,21 +2,6 @@
 <head>
 	<title>Complex Queries - Awesome TF2 Data Scanner</title>
 	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script>
-	$(document).ready(function(){
-		$("#class_submit").click(function(){
-			$.ajax({
-				type: "POST",
-				url: "/complex_query/",
-				data: {cls:document.getElementById("class").value},
-				success: function(){
-				//$("#testing").html(result);
-				$("#test").html("something happened");
-			}});
-		});
-	});
-	</script>-->
 </head>
 <body class="bdcenter">
 	<table class="center">
@@ -42,10 +27,6 @@
 		</form>
 		<div id="test"></div>
 		<!-- Render Results Table -->
-		{% if data %}
-		Data exists!  {{data|length}}
-		<br>{{data}}
-		{% endif %}
 		{% if data|length != 0 %}
 		<table>
 		<tr><td>League</td><td>Average DPM</td></tr>

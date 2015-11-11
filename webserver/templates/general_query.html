@@ -1,26 +1,25 @@
 <html>
 <head>
 	<title>General Queries - Awesome TF2 Data Scanner</title>
-	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
+	
 </head>
-<body>
+<body class="bdcenter">
 	<form method="post">
 		Query for: 
-		<select name="entity">
+		<select name="entity" id="entity">
 			<option value="player">Players</option>
 			<option value="team">Teams</option>
 		</select>
 		<br>
 		Attribute: 
-		<select name="attr">
+		<select name="attr" id="attr">
 			<option value="name">Name</option>
 			<option value="id">ID</option>
 		</select>
-		<input type="text" name="attr_val" />
-		<input type="submit" value="Submit" />
-	<form>
-	<br><br>
-	<a href="general_query.html">Clean Up</a>
+		<input type="text" name="attr_val" id="attr_val"/>
+		<button id="submit">Submit</button>
+		<br><br>
+	</form>
 	
 	<!-- RESULTS BELOW -->
 	<table>
