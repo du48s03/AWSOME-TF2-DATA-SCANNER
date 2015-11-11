@@ -9,7 +9,7 @@
 			$.ajax({
 				type: "POST",
 				url: "/complex_query/",
-				data: document.getElementById("class").value},
+				data: {cls:document.getElementById("class").value},
 				success: function(){
 				//$("#testing").html(result);
 				$("#test").html("something happened");
