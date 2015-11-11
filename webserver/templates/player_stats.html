@@ -11,8 +11,11 @@
 				url: "/player_stats/",
 				data: {attr:document.getElementById("attr").value,
 					   attr_val:document.getElementById("attr_val").value},
+				dataType: "json",
 				success: function(stats){
-					$("#test").html("testingtesting123");
+					//stats.
+					
+					$("#results").html("testingtesting123");
 			}});
 		});
 	});
