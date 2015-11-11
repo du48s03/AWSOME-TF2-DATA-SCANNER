@@ -18,23 +18,37 @@
 	});
 	</script>
 </head>
-<body>
-	Here you can find our more complex queries.  Select a query below:<br>
-	<br>
-	Average DPM of players in the highest divisions of all leagues<br>
-	<!-- dropdown of class for selection and submit button -->
-	<select name="class" id="class">
-		<option value="scout">Scout</option>
-		<option value="soldier">Soldier</option>
-		<option value="pyro">Pyro</option>
-		<option value="demoman">Demoman</option>
-		<option value="heavy">Heavy</option>
-		<option value="engineer">Engineer</option>
-		<option value="medic">Medic</option>
-		<option value="sniper">Sniper</option>
-		<option value="spy">Spy</option>
-	</select>
-	<button id="class_submit">Submit</button>
-	<div id="test"></div>
+<body class="bdcenter">
+	<table class="center">
+		<tr><td>
+			Here you can find our more complex queries.  Select a query below:<br>
+		</td></tr>
+		<tr><td>
+		Average DPM of players in the highest divisions of all leagues<br>
+		<!-- dropdown of class for selection and submit button -->
+		<select name="class" id="class">
+			<option value="scout">Scout</option>
+			<option value="soldier">Soldier</option>
+			<option value="pyro">Pyro</option>
+			<option value="demoman">Demoman</option>
+			<option value="heavy">Heavy</option>
+			<option value="engineer">Engineer</option>
+			<option value="medic">Medic</option>
+			<option value="sniper">Sniper</option>
+			<option value="spy">Spy</option>
+		</select>
+		<button id="class_submit">Submit</button>
+		<div id="test"></div>
+		<!-- Render Results Table -->
+		{% if not(length(data)==0) %}
+		<table>
+		<tr><td>League</td><td>Average DPM</td></tr>
+		{% for n in data %}
+		<tr><td>{{n.league}}</td><td>{{n.val}}</td></tr>
+		{% endfor %}
+		</table>
+		{% endif %}
+		</td></tr>
+	</table>
 </body>
 </html>
