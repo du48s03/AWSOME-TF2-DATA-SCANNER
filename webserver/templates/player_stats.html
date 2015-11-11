@@ -15,7 +15,7 @@
 				success: function(stats){
 					//stats.
 					
-					$("#results").html("testingtesting123");
+					$("#results").html(JSON.stringify(stats));
 			}});
 		});
 	});
@@ -23,7 +23,7 @@
 </head>
 <body>
 <h2>Search for Players</h2><br>
-	<div id="results"></div>
+	<div id="results"></div><br>
 	<select name="attr" id="attr">
 		<option value="name">Name</option>
 		<option value="id">Steam3ID</option>
