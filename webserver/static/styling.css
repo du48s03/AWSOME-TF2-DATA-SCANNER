@@ -20,6 +20,18 @@ table.tblcenter {
 	width: 80%;
 }
 
+tr.trcenter{
+	text-align: center;
+}
+
+tr.trright{
+	text-align:right;
+}
+
+td.tdleft{
+	text-align:left;
+}
+
 td.tdcenter{
 	text-align: center;
 	padding: 10px;

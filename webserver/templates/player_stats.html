@@ -14,14 +14,46 @@
 				dataType: "json",
 				success: function(stats){
 					var returnText = "";
+					var errorText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
-						returnText+="data here";
-					}
+						returnText+="length="+stats.data.length;
+						for(i=0;i<stats.data.length;i++){
+							if(stats.data.class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
+								var row=stats.data[i];
+								returnText+="<tr class=\"trcenter\"><td>";
+								returnText+="Name</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td<td>Drops</td><td>U/D</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
+								returnText+=row.name+"</td><td>";
+								returnText+=row.kills+"</td><td>";
+								returnText+=row.assists+"</td><td>";
+								returnText+=row.deaths+"</td><td>";
+								returnText+=row.kad+"</td><td>";
+								returnText+=row.healspermin+"</td><td>";
+								returnText+=row.ubers+"</td><td>";
+								returnText+=row.drops+"</td><td>";
+								returnText+=row.ubers/row.drops+"</td></tr>;
+							}
+						} // close medic stat display loop
+						for(i=0;i<stats.data.length;i++){
+							var row=stats.data[i];
+							returnText+="<tr class=\"trcenter\"><td>"
+							if(row.class!="medic"){ // show DPM, hide ubers and drops
+								returnText+="Name</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
+								returnText+=row.name+"</td><td>";
+								returnText+=row.kills+"</td><td>";
+								returnText+=row.assists+"</td><td>";
+								returnText+=row.deaths+"</td><td>";
+								returnText+=row.kad+"</td><td>";
+								returnText+=row.damagepermin+"</td></tr>";
+								
+							}
+						} // close stat display loop
+					} // close stat display
 					else{
-						returnText+="empty";
+						errorText+="Error: a player with that name/ID was not found";
 					}
 					$("#results").html(returnText);
+					$("#error").html(errorText);
 			}});
 		});
 	});
@@ -35,6 +67,7 @@
 	<tr><td><h2>Search for Players</h2></td></tr>
 	<tr><td>
 		<div id="results"><!-- search results go here --></div><br>
+		<div id="error"><!-- error messages go here --></div>
 		<div id="form">
 			<select name="attr" id="attr">
 				<option value="name">Name</option>
