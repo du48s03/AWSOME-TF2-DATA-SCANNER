@@ -13,9 +13,15 @@
 					   attr_val:document.getElementById("attr_val").value},
 				dataType: "json",
 				success: function(stats){
-					//stats.
-					
-					$("#results").html(JSON.stringify(stats));
+					var returnText = "";
+					returnText += JSON.stringify(stats) + "<br>"; // for debugging
+					if(stats.data!=[]){
+						returnText+="data here";
+					}
+					else{
+						returnText+="empty";
+					}
+					$("#results").html(returnText);
 			}});
 		});
 	});
@@ -27,14 +33,18 @@
 	<br></td></tr>
 	
 	<tr><td><h2>Search for Players</h2></td></tr>
-	<div id="results"></div><br>
-	<select name="attr" id="attr">
-		<option value="name">Name</option>
-		<option value="id">Steam3ID</option>
-	</select>
-	<input type="text" name="attr_val" id="attr_val"/>
-	<button id="submit">Submit</button>
-	<tr><td><a href="/">Back to index</a></td></tr>
+	<tr><td>
+		<div id="results"><!-- search results go here --></div><br>
+		<div id="form">
+			<select name="attr" id="attr">
+				<option value="name">Name</option>
+				<option value="id">Steam3ID</option>
+			</select>
+			<input type="text" name="attr_val" id="attr_val"/>
+			<button id="submit">Submit</button>
+		</div>
+	</td></tr>
 </table>
+<div id="return"><a href="/">Back to index</a></div>
 </body>
 </html>

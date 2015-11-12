@@ -18,12 +18,12 @@ table.tblcenter {
 	margin-right: auto;
 	width: 80%;
 }
-/*
+
 td.tdcenter{
 	text-align: center;
 	padding: 10px;
 }
-*/
+
 td.tdblue{
 	background: rgba(91,122,140,0.8); /* TF2 med blue */
 	padding: 10px;
@@ -32,4 +32,12 @@ td.tdblue{
 td.tdred{
 	background: rgba(189,58,58,0.8);
 	padding: 10px;
+}
+
+#return {
+	clear: both;
+	font-size: 100%;
+	text-align: center;
+	bottom: 0;
+	height: 30px;
 }
