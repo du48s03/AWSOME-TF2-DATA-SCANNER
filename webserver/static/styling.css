@@ -1,6 +1,6 @@
-body.bdcenter {
+body{
 	text-align: center;
-	background-color: #5B7A8C /* TF2 med blue */
+	background-color: #F6E7DE /* TF2 light tan */
 	/*-moz-background-size: cover;
 	-webkit-background-size: cover;
 	background-size: cover;
@@ -18,8 +18,16 @@ table.tblcenter {
 	margin-right: auto;
 	width: 80%;
 }
-
+/*
 td.tdcenter{
 	text-align: center;
 	padding: 10px;
+}
+*/
+td.tdblue{
+	background: rgba(91,122,140,1); /* TF2 med blue */
+}
+
+td.tdred{
+	background: rgba(189,58,58,1);
 }
