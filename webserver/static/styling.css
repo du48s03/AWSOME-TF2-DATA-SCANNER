@@ -25,9 +25,11 @@ td.tdcenter{
 }
 */
 td.tdblue{
-	background: rgba(91,122,140,1); /* TF2 med blue */
+	background: rgba(91,122,140,0.8); /* TF2 med blue */
+	padding: 10px;
 }
 
 td.tdred{
-	background: rgba(189,58,58,1);
+	background: rgba(189,58,58,0.8);
+	padding: 10px;
 }
