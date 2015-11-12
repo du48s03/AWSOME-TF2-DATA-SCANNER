@@ -21,8 +21,8 @@
 					if(stats.data.length>0){
 						returnText+="length="+stats.data.length+"<br><table>";
 						for(i=0;i<stats.data.length;i++){
-							console.log(stats.data.class);
-							if(stats.data.class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
+							console.log(stats.data[i].class);
+							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
 								returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td<td>Drops</td><td>U/D</td></tr>";
 								var row=stats.data[i];
 								returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
