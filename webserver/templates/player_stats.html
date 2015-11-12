@@ -36,18 +36,19 @@
 								returnText+=row.ubers/row.drops+"</td></tr>";
 							}
 						} // close medic stat display loop
+						
+							returnText+="<tr><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							returnText+="<tr class=\"trcenter\"><td>"
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								returnText+="Name</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
 								returnText+=row.name+"</td><td>";
+								returnText+=row.class+"</td><td>";
 								returnText+=row.kills+"</td><td>";
 								returnText+=row.assists+"</td><td>";
 								returnText+=row.deaths+"</td><td>";
 								returnText+=row.kad+"</td><td>";
 								returnText+=row.damagepermin+"</td></tr>";
-								
 							}
 						} // close stat display loop
 						returnText+="</table>";
