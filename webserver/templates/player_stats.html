@@ -15,7 +15,7 @@
 				success: function(stats){
 					var returnText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
-					if(stats.data!=[]){
+					if(stats.data.length>0){
 						returnText+="data here";
 					}
 					else{
