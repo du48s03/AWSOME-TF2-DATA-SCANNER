@@ -9,8 +9,17 @@ body.bdcenter {
 	background-attachment: fixed;*/
 }
 
-table.center {
+table,tr,td {
+	border: 1px solid black;
+}
+
+table.tblcenter {
 	margin-left: auto;
 	margin-right: auto;
 	width: 80%;
+}
+
+td.tdcenter{
+	text-align: center;
+	padding: 10px;
 }
