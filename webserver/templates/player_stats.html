@@ -22,10 +22,11 @@
 						returnText+="length="+stats.data.length+"<br><table>";
 						for(i=0;i<stats.data.length;i++){
 							if(stats.data.class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
+								returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td<td>Drops</td><td>U/D</td></tr>";
 								var row=stats.data[i];
-								returnText+="<tr class=\"trcenter\"><td>";
-								returnText+="Name</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td<td>Drops</td><td>U/D</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
+								returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
 								returnText+=row.name+"</td><td>";
+								returnText+=row.class+"</td><td>";
 								returnText+=row.kills+"</td><td>";
 								returnText+=row.assists+"</td><td>";
 								returnText+=row.deaths+"</td><td>";
@@ -37,7 +38,7 @@
 							}
 						} // close medic stat display loop
 						
-							returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
+						returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
