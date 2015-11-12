@@ -19,7 +19,7 @@
 					var errorText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
-						returnText+="length="+stats.data.length;
+						returnText+="length="+stats.data.length+"<br><table>";
 						for(i=0;i<stats.data.length;i++){
 							if(stats.data.class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
 								var row=stats.data[i];
@@ -50,7 +50,8 @@
 								
 							}
 						} // close stat display loop
-					} // close stat display
+						returnText+="</table>";
+					} // close non-empty stat display
 					else{
 						errorText+="Error: a player with that name/ID was not found";
 					}
