@@ -18,8 +18,8 @@
 					var medOrig = document.getElementById("medresults").innerHTML;
 					var nonMedOrig = document.getElementById("nonmedresults").innerHTML;
 					console.log("nonMedText:"+nonMedOrig + "."+nonMedOrig.length);
-					var medText = "";
-					var nonMedText = "";
+					var medText = medOrig;
+					var nonMedText = nonMedOrig;
 					var errorText = "";
 					$("#debug").html(JSON.stringify(stats) + "<br>"); // for debugging
 					if(stats.data.length>0){
