@@ -110,32 +110,30 @@ def view_team_query():
     return render_template('team_query.html')
   else:#The user queries for a team by either team name or team ID
     result = {'errmsg':'', 'playerlist':[], 'stats':{}}
-    #Get the team ID"
-    team = g.conn.execute("""
+    #Get the team ID
+    print "team name = "+utils.sanitize(request.form['attr_val'])
+    qrystr = """
 SELECT id
 FROM team
-WHERE team.name='"""+utils.sanitize(request.form['attr_val'])+
-"""
-';"""
-).fetchone()#Assumes there are no teams with the same name. 
+WHERE team.name='"""+utils.sanitize(request.form['attr_val'])+"""';"""
+    print "Query string = "+ qrystr
+    team = g.conn.execute(qrystr).fetchone()#Assumes there are no teams with the same name. 
     if(team is None):
       #The team doesn't exist
       return jsonify({'errmsg':'The team name does not exist in the database'})
     else:
       teamID = team[0]
-    print "team name = "+sanitize(request.form['attr_val'])
     print "team ID = "+ str(teamID) 
     #---Get the player list---
     qrystr = """
-SELECT P.id, P.name, PF.class, PF.kills, PF.assists, PF.deaths, PF.kad, PF.healspermin, F.damagepermin, F.ubers, F.drops, 
+SELECT P.id, P.name, PF.class, PF.kills, PF.assists, PF.deaths, PF.kad, PF.healspermin, PF.damagepermin, PF.ubers, PF.drops 
 FROM player AS P, playson AS PT, 
 	(SELECT playsformat.*
 	 FROM playsformat, teamformat
 	 WHERE teamformat.team="""+str(teamID)+""" AND playsformat.format=teamformat.format
 	) AS PF
-WHERE PT.team="""+str(teamID)+""" AND P.id=PT.player AND PF.player=PT.player;
-""" 
-    player_it = g.conn.exuecute(qrystr)
+WHERE PT.team="""+str(teamID)+""" AND P.id=PT.player AND PF.player=PT.player;""" 
+    player_it = g.conn.execute(qrystr)
     for player in player_it:
       print player
       result['playerlist'].append(dict(zip(['id','name','class','kills','assists',\
