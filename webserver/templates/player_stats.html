@@ -20,15 +20,8 @@
 					var returnText = document.getElementById("results").innerHTML;
 					var errorText = "";
 					//var formText = "";
-					returnText += JSON.stringify(stats) + "<br>"; // for debugging
+					//returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
-						/*if(returnTextOrig==""){
-							returnText+=stats.data.length+"<table>";
-							console.log("starting from scratch");
-						}
-						else {
-							returnText=returnText.substring(0,returnText.length-8); // truncate closing table tag
-						}*/
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
 							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
@@ -52,9 +45,9 @@
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								//if(returnTextOrig==""){
+								if(returnTextOrig=="<!-- search results go here -->"){
 									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
-								//}
+								}
 								returnText+=row.name+"</td><td>";
 								returnText+=row.class+"</td><td>";
 								returnText+=row.kills+"</td><td>";
