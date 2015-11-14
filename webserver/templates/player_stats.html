@@ -15,19 +15,19 @@
 					   attr_val:document.getElementById("attr_val").value},
 				dataType: "json",
 				success: function(stats){
-					var returnTextOrig = document.getElementById("results").innerHTML;
+					//var returnTextOrig = document.getElementById("results").innerHTML;
 					var returnText = document.getElementById("results").innerHTML;
 					var errorText = "";
 					//var formText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
-						if(returnTextOrig==""){
+						/*if(returnTextOrig==""){
 							returnText+=stats.data.length+"<table>";
 							console.log("starting from scratch");
 						}
 						else {
 							returnText=returnText.substring(0,returnText.length-8); // truncate closing table tag
-						}
+						}*/
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
 							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
@@ -84,7 +84,7 @@
 		
 		<tr><td><h2>Search for Players</h2></td></tr>
 		<tr><td>
-			<div id="results"><!-- search results go here --></div><br>
+			<div id="results"><!-- search results go here --><table></table></div><br>
 			<div id="error"><!-- error messages go here --></div>
 			<div id="form">
 				<select name="attr" id="attr">
