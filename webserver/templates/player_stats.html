@@ -21,7 +21,7 @@
 					var medText = "";
 					var nonMedText = "";
 					var errorText = "";
-					//nonMedText += JSON.stringify(stats) + "<br>"; // for debugging
+					$("#error").html(JSON.stringify(stats) + "<br>"); // for debugging
 					if(stats.data.length>0){
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
@@ -71,7 +71,7 @@
 					$("#medresults").html(medText);
 					$("#nonmedresults").html(nonMedText);
 					$("#error").html(errorText);
-					$("#form").html("Add another player:<br>"+document.getElementById("form").innerHTML);
+					//$("#form").html("Add another player:<br>"+document.getElementById("form").innerHTML);
 				}
 			});
 		});
@@ -85,6 +85,7 @@
 		
 		<tr><td><h2>Search for Players</h2></td></tr>
 		<tr><td>
+			<div id="debug"></div>
 			<table id="medresults"></table>
 			<table id="nonmedresults"></table><br>
 			<div id="error"><!-- error messages go here --></div>
