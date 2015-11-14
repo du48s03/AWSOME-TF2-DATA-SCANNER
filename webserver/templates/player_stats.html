@@ -21,7 +21,7 @@
 					var medText = "";
 					var nonMedText = "";
 					var errorText = "";
-					$("#error").html(JSON.stringify(stats) + "<br>"); // for debugging
+					$("#debug").html(JSON.stringify(stats) + "<br>"); // for debugging
 					if(stats.data.length>0){
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
