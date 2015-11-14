@@ -27,11 +27,11 @@
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
 							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
-								if(medOrig==""){
+								if(medOrig.length==0){
 									returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
 								}
 								var row=stats.data[i];
-								if(medText==""){
+								if(medText.length==0){
 									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
 								}
 								returnText+=row.name+"</td><td>";
@@ -50,11 +50,11 @@
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								if(nonMedOrig==""){
+								if(nonMedOrig.length==0){
 									console.log("adding player");
 									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
 								}
-								if(returnText==""){
+								if(returnText.length==0){
 									returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 								}
 								returnText+=row.name+"</td><td>";
