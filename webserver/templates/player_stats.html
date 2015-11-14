@@ -15,9 +15,11 @@
 					   attr_val:document.getElementById("attr_val").value},
 				dataType: "json",
 				success: function(stats){
-					var returnTextOrig = document.getElementById("results").innerHTML;
+					var medOrig = document.getElementById("medresults").innerHTML;
+					var nonMedOrig = document.getElementById("nonmedresults").innerHTML;
 					console.log("returnText: "+returnTextOrig);
-					var returnText = document.getElementById("results").innerHTML;
+					var medText = document.getElementById("medresults").innerHTML;
+					var returnText = document.getElementById("nonmedresults").innerHTML;
 					var errorText = "";
 					//var formText = "";
 					//returnText += JSON.stringify(stats) + "<br>"; // for debugging
@@ -25,9 +27,13 @@
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
 							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
-								returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
+								if(medOrig==""){
+									returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
+								}
 								var row=stats.data[i];
-								returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								if(medText==""){
+									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								}
 								returnText+=row.name+"</td><td>";
 								returnText+=row.class+"</td><td>";
 								returnText+=row.kills+"</td><td>";
@@ -41,12 +47,15 @@
 							}
 						} // close medic stat display loop
 						
-						returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								if(returnTextOrig=="<!-- search results go here -->"){
+								if(returnTextOrig==""){
+									console.log("adding player");
 									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								}
+								if(returnText==""){
+									returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 								}
 								returnText+=row.name+"</td><td>";
 								returnText+=row.class+"</td><td>";
@@ -63,7 +72,7 @@
 					else{
 						errorText+="Error: a player with that name/ID was not found";
 					}
-					$("#results").html(returnText);
+					$("#nonmedresults").html(returnText);
 					$("#error").html(errorText);
 				}
 			});
@@ -78,7 +87,8 @@
 		
 		<tr><td><h2>Search for Players</h2></td></tr>
 		<tr><td>
-			<table id="results"><!-- search results go here --></table><br>
+			<table id="medresults"></table>
+			<table id="nonmedresults"></table><br>
 			<div id="error"><!-- error messages go here --></div>
 			<div id="form">
 				<select name="attr" id="attr">
