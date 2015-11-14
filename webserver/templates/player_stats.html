@@ -17,7 +17,7 @@
 				success: function(stats){
 					var returnText = document.getElementById("results").innerHTML;
 					var errorText = "";
-					var formText = "";
+					//var formText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
 						returnText+="length="+stats.data.length+"<br><table>";
