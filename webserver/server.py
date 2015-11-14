@@ -194,16 +194,17 @@ def view_complex_query():
   if(request.method == "POST"):
     cls = utils.sanitize(request.form['cls'])
     print 'cls = ' + cls 
-    qrystr = """SELECT TopPlayers.league, AVG(PlaysFormat.damagepermin) FROM (
-        SELECT PlaysOn.player,TopTeams.league FROM (
+    qrystr = """SELECT TopPlayers.league, AVG(PlaysFormat.damagepermin) 
+FROM PlaysFormat, 
+	(SELECT PlaysOn.player,TopTeams.league 
+	FROM PlaysOn, (
                 SELECT TD.team, TD.league
                 FROM TeamDivision as TD
                 INNER JOIN LeagueDivision as LD
                 ON TD.division=LD.division AND TD.league=LD.league
-                WHERE LD.rank=1 ) AS TopTeams
-        INNER JOIN PlaysOn ON TopTeams.team=PlaysOn.team ) AS TopPlayers
-INNER JOIN PlaysFormat ON PlaysFormat.player=TopPlayers.player
-WHERE PlaysFormat.class = '"""+cls+"""' AND PlaysFormat.damagePerMin IS NOT NULL
+                WHERE LD.rank=1 AND  ) AS TopTeams
+	WHERE PlaysOn.team=TopTeams.team) AS TopPlayers
+WHERE PlaysFormat.player=TopPlayers.player AND PlaysFormat.class = '"""+cls+"""' AND PlaysFormat.damagePerMin IS NOT NULL
 GROUP BY TopPlayers.league;"""
     print qrystr
     result = g.conn.execute(qrystr)
