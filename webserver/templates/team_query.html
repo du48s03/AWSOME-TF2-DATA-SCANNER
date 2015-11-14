@@ -1,0 +1,83 @@
+<html>
+<head>
+	<title>Team Stats - Awesome TF2 Data Scanner</title>
+	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
+</head>
+<body>
+	<table class="tblcenter">
+		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+		<br></td></tr>
+		
+		<tr><td><h2>Search for Teams</h2></td></tr>
+		<tr><td>
+			<div id="results"><!-- search results go here --></div><br>
+			<div id="error"><!-- error messages go here --></div>
+			<div id="form">
+				<input type="text" name="attr_val" id="attr_val">Enter Team Name Here</input>
+				<button id="submit">Submit</button>
+			</div>
+		</td></tr>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		console.log("ready script read");
+		$("#submit").click(function(){
+			console.log("submit button clicked");
+			$.ajax({
+				type: "POST",
+				url: "/team_query/",
+				data: {attr_val:document.getElementById("attr_val").value},
+				dataType: "json",
+				success: function(stats){
+					var returnText = "";
+					var errorText = "";
+					returnText += JSON.stringify(stats) + "<br>"; // for debugging
+					if(stats.errmsg==""){
+						returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
+						for(i=0;i<stats.playerlist.length;i++){
+							if(stats.playerlist[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
+								var row=stats.playerlist[i];
+								returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								returnText+=row.name+"</td><td>";
+								returnText+=row.class+"</td><td>";
+								returnText+=row.kills+"</td><td>";
+								returnText+=row.assists+"</td><td>";
+								returnText+=row.deaths+"</td><td>";
+								returnText+=row.kad+"</td><td>";
+								returnText+=row.healspermin+"</td><td>";
+								returnText+=row.ubers+"</td><td>";
+								returnText+=row.drops+"</td><td>";
+								returnText+=row.ubers/row.drops+"</td></tr>";
+							}
+						} // close medic stat display loop
+						
+						returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
+						for(i=0;i<stats.playerlist.length;i++){
+							var row=stats.playerlist[i];
+							if(row.class!="medic"){ // show DPM, hide ubers and drops
+								returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								returnText+=row.name+"</td><td>";
+								returnText+=row.class+"</td><td>";
+								returnText+=row.kills+"</td><td>";
+								returnText+=row.assists+"</td><td>";
+								returnText+=row.deaths+"</td><td>";
+								returnText+=row.kad+"</td><td>";
+								returnText+=row.damagepermin+"</td></tr>";
+							}
+						} // close stat display loop
+						returnText+="</table>";
+					} // close non-empty stat display
+					else{
+						errorText+="Error: a team with that name was not found";
+					}
+					$("#results").html(returnText);
+					$("#error").html(errorText);
+				}
+			});
+		});
+	});
+	</script>
+	</table>
+	<br><br><div id="return"><a href="/">Back to index</a></div>
+</body>
+</html>

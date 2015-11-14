@@ -15,17 +15,27 @@
 					   attr_val:document.getElementById("attr_val").value},
 				dataType: "json",
 				success: function(stats){
-					var returnText = "";
+					//var returnTextOrig = document.getElementById("results").innerHTML;
+					var returnText = document.getElementById("results").innerHTML;
 					var errorText = "";
+					//var formText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
-						returnText+="length="+stats.data.length+"<br><table>";
+						/*if(returnTextOrig==""){
+							returnText+=stats.data.length+"<table>";
+							console.log("starting from scratch");
+						}
+						else {
+							returnText=returnText.substring(0,returnText.length-8); // truncate closing table tag
+						}*/
 						for(i=0;i<stats.data.length;i++){
-							if(stats.data.class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
+							console.log(stats.data[i].class);
+							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
+								returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
 								var row=stats.data[i];
-								returnText+="<tr class=\"trcenter\"><td>";
-								returnText+="Name</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td<td>Drops</td><td>U/D</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
+								returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
 								returnText+=row.name+"</td><td>";
+								returnText+=row.class+"</td><td>";
 								returnText+=row.kills+"</td><td>";
 								returnText+=row.assists+"</td><td>";
 								returnText+=row.deaths+"</td><td>";
@@ -36,21 +46,25 @@
 								returnText+=row.ubers/row.drops+"</td></tr>";
 							}
 						} // close medic stat display loop
+						
+						returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
-							returnText+="<tr class=\"trcenter\"><td>"
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								returnText+="Name</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr><tr class=\"trright\"><td class=\"tdleft\">";
+								//if(returnTextOrig==""){
+									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								//}
 								returnText+=row.name+"</td><td>";
+								returnText+=row.class+"</td><td>";
 								returnText+=row.kills+"</td><td>";
 								returnText+=row.assists+"</td><td>";
 								returnText+=row.deaths+"</td><td>";
 								returnText+=row.kad+"</td><td>";
 								returnText+=row.damagepermin+"</td></tr>";
-								
 							}
 						} // close stat display loop
-						returnText+="</table>";
+						//returnText+="</table>";
+						returnText+="Add another player: "
 					} // close non-empty stat display
 					else{
 						errorText+="Error: a player with that name/ID was not found";
@@ -64,24 +78,25 @@
 	</script>
 </head>
 <body>
-<table class="tblcenter">
-	<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
-	<br></td></tr>
-	
-	<tr><td><h2>Search for Players</h2></td></tr>
-	<tr><td>
-		<div id="results"><!-- search results go here --></div><br>
-		<div id="error"><!-- error messages go here --></div>
-		<div id="form">
-			<select name="attr" id="attr">
-				<option value="name">Name</option>
-				<option value="id">Steam3ID</option>
-			</select>
-			<input type="text" name="attr_val" id="attr_val"/>
-			<button id="submit">Submit</button>
-		</div>
-	</td></tr>
-</table>
-<div id="return"><a href="/">Back to index</a></div>
+	<table class="tblcenter">
+		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+		<br></td></tr>
+		
+		<tr><td><h2>Search for Players</h2></td></tr>
+		<tr><td>
+			<table><div id="results"><!-- search results go here --></div></table><br>
+			<div id="error"><!-- error messages go here --></div>
+			<div id="form">
+				<select name="attr" id="attr">
+					<option value="name">Name</option>
+					<option value="id">Steam3ID</option>
+				</select>
+				<input type="text" name="attr_val" id="attr_val"/>
+				<button id="submit">Submit</button>
+			</div>
+		</td></tr>
+		<tr><td><a href="/player_stats">Clear all</a></td></tr>
+	</table>
+	<br><br><div id="return"><a href="/">Back to index</a></div>
 </body>
 </html>
