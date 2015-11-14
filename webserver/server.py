@@ -199,10 +199,8 @@ FROM PlaysFormat,
 	(SELECT PlaysOn.player,TopTeams.league 
 	FROM PlaysOn, (
                 SELECT TD.team, TD.league
-                FROM TeamDivision as TD
-                INNER JOIN LeagueDivision as LD
-                ON TD.division=LD.division AND TD.league=LD.league
-                WHERE LD.rank=1 AND  ) AS TopTeams
+                FROM TeamDivision as TD, LeagueDivison as LD
+                WHERE LD.rank=1 AND TD.league=LD.league AND TD.division = LD.league) AS TopTeams
 	WHERE PlaysOn.team=TopTeams.team) AS TopPlayers
 WHERE PlaysFormat.player=TopPlayers.player AND PlaysFormat.class = '"""+cls+"""' AND PlaysFormat.damagePerMin IS NOT NULL
 GROUP BY TopPlayers.league;"""
