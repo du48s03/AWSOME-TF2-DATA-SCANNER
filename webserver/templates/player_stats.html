@@ -17,7 +17,7 @@
 				success: function(stats){
 					var medOrig = document.getElementById("medresults").innerHTML;
 					var nonMedOrig = document.getElementById("nonmedresults").innerHTML;
-					console.log("returnText: "+returnTextOrig);
+					console.log("returnText: "+nonMedOrig);
 					var medText = document.getElementById("medresults").innerHTML;
 					var returnText = document.getElementById("nonmedresults").innerHTML;
 					var errorText = "";
@@ -50,7 +50,7 @@
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								if(returnTextOrig==""){
+								if(nonMedOrig==""){
 									console.log("adding player");
 									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
 								}
