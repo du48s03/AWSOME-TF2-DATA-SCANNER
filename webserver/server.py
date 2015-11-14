@@ -108,7 +108,7 @@ def teardown_request(exception):
 def view_team_query():
   if(request.method=="GET"):# The user accesses the page
     return render_template('team_query.html')
-  else(request.method=="POST"):#The user queries for a team by either team name or team ID
+  else:#The user queries for a team by either team name or team ID
     result = {'errmsg':'', 'playerlist':[], 'stats':{}}
     #Get the team ID"
     team = g.conn.execute("""
