@@ -15,8 +15,9 @@
 					   attr_val:document.getElementById("attr_val").value},
 				dataType: "json",
 				success: function(stats){
-					var returnText = "";
+					var returnText = document.getElementById("results").innerHTML;
 					var errorText = "";
+					var formText = "";
 					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.data.length>0){
 						returnText+="length="+stats.data.length+"<br><table>";
@@ -54,6 +55,7 @@
 							}
 						} // close stat display loop
 						returnText+="</table>";
+						returnText+="Add another player: "
 					} // close non-empty stat display
 					else{
 						errorText+="Error: a player with that name/ID was not found";
@@ -67,24 +69,24 @@
 	</script>
 </head>
 <body>
-<table class="tblcenter">
-	<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
-	<br></td></tr>
-	
-	<tr><td><h2>Search for Players</h2></td></tr>
-	<tr><td>
-		<div id="results"><!-- search results go here --></div><br>
-		<div id="error"><!-- error messages go here --></div>
-		<div id="form">
-			<select name="attr" id="attr">
-				<option value="name">Name</option>
-				<option value="id">Steam3ID</option>
-			</select>
-			<input type="text" name="attr_val" id="attr_val"/>
-			<button id="submit">Submit</button>
-		</div>
-	</td></tr>
-</table>
-<div id="return"><a href="/">Back to index</a></div>
+	<table class="tblcenter">
+		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+		<br></td></tr>
+		
+		<tr><td><h2>Search for Players</h2></td></tr>
+		<tr><td>
+			<div id="results"><!-- search results go here --></div><br>
+			<div id="error"><!-- error messages go here --></div>
+			<div id="form">
+				<select name="attr" id="attr">
+					<option value="name">Name</option>
+					<option value="id">Steam3ID</option>
+				</select>
+				<input type="text" name="attr_val" id="attr_val"/>
+				<button id="submit">Submit</button>
+			</div>
+		</td></tr>
+	</table>
+	<br><br><div id="return"><a href="/">Back to index</a></div>
 </body>
 </html>
