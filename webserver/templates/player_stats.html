@@ -30,9 +30,7 @@
 									medText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
 								}
 								var row=stats.data[i];
-								if(medText.length==0){
-									medText+="<tr class=\"trright\"><td class=\"tdleft\">";
-								}
+								medText+="<tr class=\"trright\"><td class=\"tdleft\">";
 								medText+=row.name+"</td><td>";
 								medText+=row.class+"</td><td>";
 								medText+=row.kills+"</td><td>";
@@ -50,12 +48,13 @@
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
 								if(nonMedOrig.length==0){
-									console.log("adding player");
-									nonMedText+="<tr class=\"trright\"><td class=\"tdleft\">";
-								}
-								if(nonMedText.length==0){
+									console.log("adding headers for new player");
 									nonMedText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 								}
+								
+								//console.log("adding player to existing");
+								nonMedText+="<tr class=\"trright\"><td class=\"tdleft\">";
+						
 								nonMedText+=row.name+"</td><td>";
 								nonMedText+=row.class+"</td><td>";
 								nonMedText+=row.kills+"</td><td>";
