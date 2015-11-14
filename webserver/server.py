@@ -196,11 +196,11 @@ def view_complex_query():
     print 'cls = ' + cls 
     qrystr = """SELECT TopPlayers.league, AVG(PlaysFormat.damagepermin) 
 FROM PlaysFormat, 
-	(SELECT PlaysOn.player,TopTeams.league 
+	(SELECT PlaysOn.player AS player,TopTeams.league AS league
 	FROM PlaysOn, (
-                SELECT TD.team, TD.league
-                FROM TeamDivision as TD, LeagueDivison as LD
-                WHERE LD.rank=1 AND TD.league=LD.league AND TD.division = LD.league) AS TopTeams
+                SELECT TD.team AS team, TD.league AS league
+                FROM TeamDivision as TD, LeagueDivision as LD
+                WHERE LD.rank=1 AND TD.league=LD.league AND TD.division = LD.division) AS TopTeams
 	WHERE PlaysOn.team=TopTeams.team) AS TopPlayers
 WHERE PlaysFormat.player=TopPlayers.player AND PlaysFormat.class = '"""+cls+"""' AND PlaysFormat.damagePerMin IS NOT NULL
 GROUP BY TopPlayers.league;"""
