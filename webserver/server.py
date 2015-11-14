@@ -104,46 +104,71 @@ def teardown_request(exception):
     pass
 
 
-@app.route("/general_query/", methods=["POST", "GET"])
-def view_general_query():
-  context = {}
-  context['data'] = [{'name':'p1'}, {'name':'p2'}, {'name':'pkoko'}]
-  return render_template('general_query.html', **context)
-
-# @app.route is a decorator around index() that means:
-#   run index() whenever the user tries to access the "/" path using a POST or GET request
-#
-# If you wanted the user to go to e.g., localhost:8111/foobar/ with POST or GET then you could use
-#
-#       @app.route("/foobar/", methods=["POST", "GET"])
-#
-# PROTIP: (the trailing / in the path is important)
-# 
-# see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
-# see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
-#
+@app.route("/team_query/", methods=["POST", "GET"])
+def view_team_query():
+  if(request.method=="GET"):# The user accesses the page
+    return render_template('team_query.html')
+  else(request.method=="POST"):#The user queries for a team by either team name or team ID
+    result = {'errmsg':'', 'playerlist':[], 'stats':{}}
+    #Get the team ID"
+    team = g.conn.execute("""
+SELECT id
+FROM team
+WHERE team.name='"""+utils.sanitize(request.form['attr_val'])+
+"""
+';"""
+).fetchone()#Assumes there are no teams with the same name. 
+    if(team is None):
+      #The team doesn't exist
+      return jsonify({'errmsg':'The team name does not exist in the database'})
+    else:
+      teamID = team[0]
+    print "team name = "+sanitize(request.form['attr_val'])
+    print "team ID = "+ str(teamID) 
+    #---Get the player list---
+    qrystr = """
+SELECT P.id, P.name, PF.class, PF.kills, PF.assists, PF.deaths, PF.kad, PF.healspermin, F.damagepermin, F.ubers, F.drops, 
+FROM player AS P, playson AS PT, 
+	(SELECT playsformat.*
+	 FROM playsformat, teamformat
+	 WHERE teamformat.team="""+str(teamID)+""" AND playsformat.format=teamformat.format
+	) AS PF
+WHERE PT.team="""+str(teamID)+""" AND P.id=PT.player AND PF.player=PT.player;
+""" 
+    player_it = g.conn.exuecute(qrystr)
+    for player in player_it:
+      print player
+      result['playerlist'].append(dict(zip(['id','name','class','kills','assists',\
+  					 'deaths','kad','healspermin','damagepermin','ubers','drops'],player)))
+      
+    #---Get the team stats --- 
+    qrystr = """
+    
+  """ 
+    return jsonify(result)    
 
 @app.route("/player_stats/", methods=["POST", "GET"])
 def view_player_stats():
   if(request.method == "POST"):
     attr = request.form['attr']
     if(attr == 'name'):
-      qrystr = """SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
+      qrystr = """
+SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
 FROM player as P, playsformat as F
 WHERE	p.id = F.player
-	AND p.name = '"""+utils.sanitize(request.form['attr_val'])+"""'"""
+	AND p.name = '"""+utils.sanitize(request.form['attr_val'])+"""';"""
     elif(attr == 'id'):
       qrystr =  """SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
 FROM player as P, playsformat as F
 WHERE	p.id = F.player
-	AND p.id = '"""+utils.sanitize(request.form['attr_val'])+"""'"""
+	AND p.id = '"""+utils.sanitize(request.form['attr_val'])+"""';"""
     else:
       print "Error: unrecognized attribute "+attr
       return render_template('player_stats.html')
 
     rit = g.conn.execute(qrystr)
     # We assume that the result won't be too big
-    result = {'data':[]}
+    result = {'data':[], 'errmsg':''}
     for r in rit:
       print r
       result['data'].append({'name':r[0],
