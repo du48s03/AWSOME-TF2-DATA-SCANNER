@@ -15,7 +15,8 @@
 					   attr_val:document.getElementById("attr_val").value},
 				dataType: "json",
 				success: function(stats){
-					//var returnTextOrig = document.getElementById("results").innerHTML;
+					var returnTextOrig = document.getElementById("results").innerHTML;
+					console.log("returnText: "+returnTextOrig);
 					var returnText = document.getElementById("results").innerHTML;
 					var errorText = "";
 					//var formText = "";
