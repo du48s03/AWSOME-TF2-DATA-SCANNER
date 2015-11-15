@@ -186,7 +186,7 @@ WHERE	p.id = F.player
 
  
 @app.route("/complex_query/league_compare", methods=["POST", "GET"])
-def view_league_compare():
+def view_complex_query():
   #keys(request.args) = ['attr', 'attr_val', 'entity', 'results']
   context = dict([])
   context['data']= []
@@ -227,7 +227,7 @@ GROUP BY PF.format;"""
       formatlist_ptr = g.conn.execute(qrystr)
       for record in formatlist_ptr:
         print record
-        result['data'].append(zip(['format', 'avg_hpm', 'avg_udrate'], record))
+        result['formatlist'].append(zip(['format', 'avg_hpm', 'avg_udrate'], record))
     else:
       qrystr = """SELECT PF.format, AVG(PF.kad) as avg_KAD, AVG(PF.damagepermin) as avg_DPM
 FROM PlaysFormat AS PF
@@ -236,9 +236,9 @@ GROUP BY PF.format;"""
       formatlist_ptr = g.conn.execute(qrystr)
       for record in formatlist_ptr:
         print record
-        result['data'].append(zip(['format', 'avg_kad', 'avg_dpm'], record))
+        result['formatlist'].append(zip(['format', 'avg_kad', 'avg_dpm'], record))
     
-    return jsonify(result)
+    return render_template('format_compare.html', **result)
     
 
 
