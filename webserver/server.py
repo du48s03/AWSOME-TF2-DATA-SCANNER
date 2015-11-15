@@ -251,10 +251,11 @@ def view_correlation():
     return render_template('correlation.html', **result)
   else:
     print "POST received"
-    cls1 = request.form['class1']
-    cls2 = request.form['class2']
+    cls1 = request.form['cls1']
+    cls2 = request.form['cls2']
     result['cls1_name'] = cls1
     result['cls2_name'] = cls2
+    print "Check point 1"
     if(cls1=='medic'):
       performance1 = 'healspermin'
     else:
@@ -263,7 +264,7 @@ def view_correlation():
       performance2 = 'healspermin'
     else:
       performance2 = 'damagepermin'
-  
+    print "Check point 2"
     qrystr = """
 SELECT 	AVG(C1.performance) AS avg1, 
         AVG(C2.performance) AS avg2, 
@@ -278,15 +279,17 @@ FROM    (SELECT PlaysOn.team AS team, PlaysFormat.__PERFORMANCE1 AS performance
         FROM PlaysOn,PlaysFormat 
         WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS2'
         ) AS C2
-WHERE C1.team=C2.team AND C1.__PERFORMANCE1 IS NOT NULL AND C2.__PERFORMANCE2 IS NOT NULL;
+WHERE C1.team=C2.team AND C1.performance IS NOT NULL AND C2.performance IS NOT NULL;
 """
-    print "query string = "+ qrystr
-    re.sub('__CLASS1', cls1, qrystr)
-    re.sub('__CLASS2', cls2, qrystr)
-    re.sub('__PERFORMANCE1', performance1, qrystr)
-    re.sub('__PERFORMANCE2', performance2, qrystr)
+    qrystr = re.sub('__CLASS1', cls1, qrystr)
+    qrystr = re.sub('__CLASS2', cls2, qrystr)
+    qrystr = re.sub('__PERFORMANCE1', performance1, qrystr)
+    qrystr = re.sub('__PERFORMANCE2', performance2, qrystr)
    
+    print "query string = "+ qrystr
     data = g.conn.execute(qrystr).fetchone()
+    print "data = "
+    print data
     result['cls1_avg'] = data[0]
     result['cls2_avg'] = data[1]
     result['cls1_dev'] = data[2]
