@@ -186,7 +186,7 @@ WHERE	p.id = F.player
 
  
 @app.route("/complex_query/league_compare", methods=["POST", "GET"])
-def view_complex_query():
+def view_league_compare():
   #keys(request.args) = ['attr', 'attr_val', 'entity', 'results']
   context = dict([])
   context['data']= []
@@ -220,14 +220,14 @@ def view_format_compare():
     #Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
     cls = utils.sanitize(request.form['cls'])
     if(cls=='medic'):
-      qrystr = """SELECT PF.format, AVG(PF.healsPerMin) as avg_HPM, AVG(PF.ubers/PF.drops) as avg_UD_rate
+      qrystr = """SELECT PF.format, AVG(PF.healsPerMin) as avg_HPM, AVG(CAST(PF.ubers AS decimal)/CAST(PF.drops AS decimal)) as avg_UD_rate
 FROM PlaysFormat PF
 WHERE class='"""+cls+"""' AND PF.drops <> 0
 GROUP BY PF.format;"""
       formatlist_ptr = g.conn.execute(qrystr)
       for record in formatlist_ptr:
         print record
-        result['formatlist'].append(zip(['format', 'avg_hpm', 'avg_udrate'], record))
+        result['formatlist'].append(zip(['format', 'avg_hpm', 'avg_udrate'], [record[0], record[1], float(record[2])] ))
     else:
       qrystr = """SELECT PF.format, AVG(PF.kad) as avg_KAD, AVG(PF.damagepermin) as avg_DPM
 FROM PlaysFormat AS PF
