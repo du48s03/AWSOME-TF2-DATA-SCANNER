@@ -247,19 +247,20 @@ GROUP BY PF.format;"""
 def view_correlation():
   result = {'errmsg':"", 'cls1_name':"", 'cls1_avg':-1, 'cls1_dev':-1, 'cls2_name':"", 'cls2_avg':-1, 'cls2_dev':-1, 'correlation':-1}
   if(request.method=='GET'):
+    result['errmsg'] = "first access"
     return render_template('correlation.html', **result)
   cls1 = request.form['class1']
   cls2 = request.form['class2']
   result['cls1_name'] = cls1
   result['cls2_name'] = cls2
   if(cls1=='medic'):
-    performance1 = 'healsPerMin'
+    performance1 = 'healspermin'
   else:
-    performance1 = 'damagePerMin'
+    performance1 = 'damagepermin'
   if(cls2=='medic'):
-    performance2 = 'healsPerMin'
+    performance2 = 'healspermin'
   else:
-    performance2 = 'damagePerMin'
+    performance2 = 'damagepermin'
 
   qrystr = """
 SELECT 	AVG(C1.performance) AS avg1, 
