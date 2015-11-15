@@ -31,7 +31,7 @@
 				success: function(stats){
 					var returnText = "";
 					var errorText = "";
-					//returnText += JSON.stringify(stats) + "<br>"; // for debugging
+					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.errmsg==""){
 						returnText+="<table><tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
 						for(i=0;i<stats.playerlist.length;i++){
