@@ -214,11 +214,12 @@ GROUP BY TopPlayers.league;"""
 #Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
 @app.route("/complex_query/format_compare/", methods=["POST", "GET"])
 def view_format_compare():
-  result = {'errmsg':'', 'formatlist':[]}
+  result = {'errmsg':'', 'formatlist':[], 'class':""}
   if(request.method == "GET"):
     return render_template('format_compare.html', **result)
   else:
     cls = utils.sanitize(request.form['cls'])
+    result['class'] = cls
     if(cls=='medic'):
       qrystr = """SELECT PF.format, AVG(PF.healsPerMin) as avg_HPM, AVG(CAST(PF.ubers AS decimal)/CAST(PF.drops AS decimal)) as avg_UD_rate
 FROM PlaysFormat PF
