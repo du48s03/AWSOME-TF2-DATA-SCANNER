@@ -271,13 +271,15 @@ SELECT 	AVG(C1.performance) AS avg1,
         STDDEV(C1.performance) AS dev1, 
         STDDEV(C2.performance) AS dev2, 
         (AVG(C1.performance*C2.performance)-AVG(C1.performance)*AVG(C2.performance))/STDDEV(C1.performance)/STDDEV(C2.performance) AS cov_coeff
-FROM    (SELECT PlaysOn.team AS team, PlaysFormat.__PERFORMANCE1 AS performance
+FROM    (SELECT PlaysOn.team AS team, AVG(PlaysFormat.__PERFORMANCE1) AS performance
         FROM PlaysOn,PlaysFormat 
-        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS1'
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS1' AND PlaysFormat.__PERFORMANCE1 IS NOT NULL
+        GROUP BY PlaysOn.team
         )AS C1,
-        (SELECT PlaysOn.team AS team, PlaysFormat.__PERFORMANCE2 AS performance
+        (SELECT PlaysOn.team AS team, AVG(PlaysFormat.__PERFORMANCE2) AS performance
         FROM PlaysOn,PlaysFormat 
-        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS2'
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS2' AND PlaysFormat.__PERFORMANCE2 IS NOT NULL
+        GROUP BY PlaysOn.team
         ) AS C2
 WHERE C1.team=C2.team AND C1.performance IS NOT NULL AND C2.performance IS NOT NULL;
 """
