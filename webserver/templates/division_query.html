@@ -32,7 +32,7 @@
 		</form>
 		
 		<!-- Render Results Table -->
-		{% if errmsg|length != 0 %}
+		{% if errmsg|length == 0 %}
 			<h3>Teams in {{league}} {{division}}:</h3>
 			<table>
 			{% for n in teamlist %}
