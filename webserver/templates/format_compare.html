@@ -29,16 +29,16 @@
 		{% if formatlist|length!=0 %}
 			<table>
 			{% if formatlist[0].avg_hpm %}
-				<tr><td colspan="3" class="tdcenter">Medic Performance by Format</td></tr>
+				<tr><td colspan="3" class="tdcenter">Medic Performance By Format</td></tr>
 				<tr><td>Format</td><td>Average Heals Per Min</td><td>Average Ubers/Drops</td></tr>
 				{% for n in formatlist %}
 					<tr><td>{{n.format}}</td><td>{{n.avg_hpm}}</td><td>{{n.avg_udrate}}</td></tr>
 				{% endfor %}
 			{% else %}
-				<tr><td colspan="3" class="tdcenter">{{class}} Performance by Format</td></tr>
+				<tr><td colspan="3" class="tdcenter" style="text-transform:capitalize;">{{class}} Performance By Format</td></tr>
 				<tr><td>Format</td><td>Average Damage Per Min</td><td>Average Kills+Assists/Death</td></tr>
 				{% for n in formatlist %}
-					<tr><td>{{n.format}}</td><td>{{n.avg_hpm}}</td><td>{{n.avg_udrate}}</td></tr>
+					<tr><td>{{n.format}}</td><td>{{n.avg_dpm}}</td><td>{{n.avg_kad}}</td></tr>
 				{% endfor %}
 			{% endif %}
 			</table>
