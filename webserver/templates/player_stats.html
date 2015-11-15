@@ -76,9 +76,6 @@
 			});
 		});
 	});
-	clearBox=function(){
-		document.getElementById("attr_val").setAttribute("value","");
-	}
 	</script>
 </head>
 <body>
@@ -97,7 +94,7 @@
 					<option value="name">Name</option>
 					<option value="id">Steam3ID</option>
 				</select>
-				<input type="text" name="attr_val" id="attr_val" onclick="clearBox()"/>
+				<input type="text" name="attr_val" id="attr_val" onfocus="if(this.value!='' this.value='';"/>
 				<button id="submit">Submit</button>
 			</div>
 		</td></tr>
