@@ -304,6 +304,7 @@ def view_division_query():
   
   result = {'errmsg':"", 'teamlist':[], 'league':"", 'division':""}
   if(request.method=='GET'):
+    result['errmsg'] = "first access"
     return render_template('division_query.html', **result)
   else:
     league = request.form['league']
@@ -312,7 +313,7 @@ def view_division_query():
     result['division'] = division
     qrystr = """SELECT team.name
 FROM teamdivision, team
-WHERE teamdivision.league='"""+league+"""' AND teamdivision.divisio='"""+division+"""' AND team.id=teamdivision.team;"""
+WHERE teamdivision.league='"""+league+"""' AND teamdivision.division='"""+division+"""' AND team.id=teamdivision.team;"""
     teamlist = g.conn.execute(qrystr)
     for team in teamlist:
       result['teamlist'].append({'name':team[0]})
