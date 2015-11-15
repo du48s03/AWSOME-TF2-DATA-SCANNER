@@ -6,9 +6,14 @@ def sanitize(string):
   """
   ret = ""
   for c in string:
-    if(re.match(r'[^a-zA-Z0-9\!\&\:\_\^\-]', ""+c)):
-      ret+='\\'
-      ret+=c
+    if(c=="'"):
+      ret+="''"
     else:
       ret+=c
   return ret
+#    if(re.match(r'[^a-zA-Z0-9\!\&\:\_\^\-]', ""+c)):
+#      ret+='\\'
+#      ret+=c
+#    else:
+#      ret+=c
+#  return ret

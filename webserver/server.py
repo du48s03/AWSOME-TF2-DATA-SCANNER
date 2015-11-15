@@ -112,13 +112,12 @@ def view_team_query():
   else:#The user queries for a team by either team name or team ID
     result = {'errmsg':'', 'playerlist':[], 'stats':{}}
     #Get the team ID
-    print "team name = "+utils.sanitize(request.form['attr_val'])
     qrystr = """
 SELECT id
 FROM team
-WHERE team.name='"""+utils.sanitize(request.form['attr_val'])+"""';"""
+WHERE team.name=%s;"""
     print "Query string = "+ qrystr
-    team = g.conn.execute(qrystr).fetchone()#Assumes there are no teams with the same name. 
+    team = g.conn.execute(qrystr, (request.form['attr_val']) ).fetchone()#Assumes there are no teams with the same name. 
     if(team is None):
       #The team doesn't exist
       return jsonify({'errmsg':'The team name does not exist in the database'})
@@ -142,8 +141,20 @@ WHERE PT.team="""+str(teamID)+""" AND P.id=PT.player AND PF.player=PT.player;"""
       
     #---Get the team stats --- 
     qrystr = """
-    
+    SELECT  AVG(PlaysFormat.damagepermin) AS avg_dpm
+        FROM PlaysOn,PlaysFormat 
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysOn.team = %s AND PlaysFormat.damagepermin IS NOT NULL
   """ 
+    avg_dpm = float(g.conn.execute(qrystr, (str(teamID)) ).fetchone()[0] )
+    qrystr = """
+    SELECT  AVG(PlaysFormat.healspermin) AS avg_hpm
+        FROM PlaysOn,PlaysFormat 
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysOn.team = %s AND PlaysFormat.healspermin IS NOT NULL
+  """ 
+    avg_hpm = float(g.conn.execute(qrystr, (str(teamID)) ).fetchone()[0] ) 
+    result['stats']['avg_dpm'] = avg_dpm
+    result['stats']['avg_hpm'] = avg_hpm
+    
     return jsonify(result)    
 
 @app.route("/player_stats/", methods=["POST", "GET"])
@@ -155,17 +166,17 @@ def view_player_stats():
 SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
 FROM player as P, playsformat as F
 WHERE	p.id = F.player
-	AND p.name = '"""+utils.sanitize(request.form['attr_val'])+"""';"""
+	AND p.name = %s;"""
     elif(attr == 'id'):
       qrystr =  """SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
 FROM player as P, playsformat as F
 WHERE	p.id = F.player
-	AND p.id = '"""+utils.sanitize(request.form['attr_val'])+"""';"""
+	AND p.id = %s;"""
     else:
       print "Error: unrecognized attribute "+attr
       return render_template('player_stats.html')
 
-    rit = g.conn.execute(qrystr)
+    rit = g.conn.execute(qrystr, (request.form['attr_val']))
     # We assume that the result won't be too big
     result = {'data':[], 'errmsg':''}
     for r in rit:
@@ -202,10 +213,10 @@ FROM PlaysFormat,
                 FROM TeamDivision as TD, LeagueDivision as LD
                 WHERE LD.rank=1 AND TD.league=LD.league AND TD.division = LD.division) AS TopTeams
 	WHERE PlaysOn.team=TopTeams.team) AS TopPlayers
-WHERE PlaysFormat.player=TopPlayers.player AND PlaysFormat.class = '"""+cls+"""' AND PlaysFormat.damagePerMin IS NOT NULL
+WHERE PlaysFormat.player=TopPlayers.player AND PlaysFormat.class = %s AND PlaysFormat.damagePerMin IS NOT NULL
 GROUP BY TopPlayers.league;"""
     print qrystr
-    result = g.conn.execute(qrystr)
+    result = g.conn.execute(qrystr, (cls))
     for record in result:
       print record
       context['data'].append({'league':str(record[0]), 'val':str(record[1])})
@@ -224,18 +235,18 @@ def view_format_compare():
     if(cls=='medic'):
       qrystr = """SELECT PF.format, AVG(PF.healsPerMin) as avg_HPM, AVG(CAST(PF.ubers AS decimal)/CAST(PF.drops AS decimal)) as avg_UD_rate
 FROM PlaysFormat PF
-WHERE class='"""+cls+"""' AND PF.drops <> 0
+WHERE class=%s AND PF.drops <> 0
 GROUP BY PF.format;"""
-      formatlist_ptr = g.conn.execute(qrystr)
+      formatlist_ptr = g.conn.execute(qrystr, (cls))
       for record in formatlist_ptr:
         print record
         result['formatlist'].append(dict(zip(['format', 'avg_hpm', 'avg_udrate'], [record[0], record[1], float(record[2])] )))
     else:
       qrystr = """SELECT PF.format, AVG(PF.kad) as avg_KAD, AVG(PF.damagepermin) as avg_DPM
 FROM PlaysFormat AS PF
-WHERE class='"""+cls+"""' AND PF.deaths <> 0 
+WHERE class=%s AND PF.deaths <> 0 
 GROUP BY PF.format;"""
-      formatlist_ptr = g.conn.execute(qrystr)
+      formatlist_ptr = g.conn.execute(qrystr, (cls))
       for record in formatlist_ptr:
         print record
         result['formatlist'].append(dict(zip(['format', 'avg_kad', 'avg_dpm'], record)))
@@ -273,23 +284,23 @@ SELECT 	AVG(C1.performance) AS avg1,
         (AVG(C1.performance*C2.performance)-AVG(C1.performance)*AVG(C2.performance))/STDDEV(C1.performance)/STDDEV(C2.performance) AS cov_coeff
 FROM    (SELECT PlaysOn.team AS team, AVG(PlaysFormat.__PERFORMANCE1) AS performance
         FROM PlaysOn,PlaysFormat 
-        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS1' AND PlaysFormat.__PERFORMANCE1 IS NOT NULL
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class= %s AND PlaysFormat.__PERFORMANCE1 IS NOT NULL
         GROUP BY PlaysOn.team
         )AS C1,
         (SELECT PlaysOn.team AS team, AVG(PlaysFormat.__PERFORMANCE2) AS performance
         FROM PlaysOn,PlaysFormat 
-        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS2' AND PlaysFormat.__PERFORMANCE2 IS NOT NULL
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class= %s AND PlaysFormat.__PERFORMANCE2 IS NOT NULL
         GROUP BY PlaysOn.team
         ) AS C2
 WHERE C1.team=C2.team AND C1.performance IS NOT NULL AND C2.performance IS NOT NULL;
 """
-    qrystr = re.sub('__CLASS1', cls1, qrystr)
-    qrystr = re.sub('__CLASS2', cls2, qrystr)
+    #qrystr = re.sub('__CLASS1', cls1, qrystr)
+    #qrystr = re.sub('__CLASS2', cls2, qrystr)
     qrystr = re.sub('__PERFORMANCE1', performance1, qrystr)
     qrystr = re.sub('__PERFORMANCE2', performance2, qrystr)
    
     print "query string = "+ qrystr
-    data = g.conn.execute(qrystr).fetchone()
+    data = g.conn.execute(qrystr, (cls1, cls2)).fetchone()
     print "data = "
     print data
     result['cls1_avg'] = data[0]
@@ -313,8 +324,8 @@ def view_division_query():
     result['division'] = division
     qrystr = """SELECT team.name
 FROM teamdivision, team
-WHERE teamdivision.league='"""+league+"""' AND teamdivision.division='"""+division+"""' AND team.id=teamdivision.team;"""
-    teamlist = g.conn.execute(qrystr)
+WHERE teamdivision.league=%s AND teamdivision.division=%s AND team.id=teamdivision.team;"""
+    teamlist = g.conn.execute(qrystr, (league, division))
     for team in teamlist:
       result['teamlist'].append({'name':team[0]})
     return render_template('division_query.html', **result)
