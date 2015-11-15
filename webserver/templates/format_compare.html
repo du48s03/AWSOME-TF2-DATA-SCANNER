@@ -24,19 +24,22 @@
 		</select>
 		<button id="class_submit">Submit</button>
 		</form>
-		</td></tr>
 		
 		<!-- Results table -->
-		{% if errmsg|length==0 %}
+		{% if formatlist|length==0 %}
 			<table>
 			{% if formatlist[1]=="avg_hpm" %}
 				<!--<tr><td>Format</td><td>Average Heals Per Min</td><td>Average Ubers/Drops</td></tr>-->
+				<tr><td colspan="3">Medic Performance by Format</td></tr>
 				<tr><td>{{formatlist}}</td></tr>
 			{% else %}
+				
 				<tr><td>{{formatlist}}</td></tr>
 			{% endif %}
 			</table>
 		{% endif %}
+		</td></tr>
 	</table>
+	<br><br><div id="return"><a href="/">Back to index</a></div>
 </body>
 </html>
