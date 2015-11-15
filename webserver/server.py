@@ -213,10 +213,10 @@ GROUP BY TopPlayers.league;"""
 
 @app.route("/complex_query/format_compare/", methods=["POST", "GET"])
 def view_format_compare():
+  result = {'errmsg':'', 'formatlist':[]}
   if(request.method == "GET"):
-    return render_template('format_compare.html')
+    return render_template('format_compare.html', **result)
   else:
-    result = {'errmsg':'', 'formatlist':[]}
     #Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
     cls = utils.sanitize(request.form['cls'])
     if(cls=='medic'):
