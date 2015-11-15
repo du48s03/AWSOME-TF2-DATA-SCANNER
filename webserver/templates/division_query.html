@@ -7,9 +7,9 @@
 	<table class="tblcenter">
 		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
 		<br></td></tr>
-		<tr><td>
 		<tr><td><h2>Search for Teams by League and Division</h2></td></tr>
 		<!-- dropdown of class for selection and submit button -->
+		<tr><td>
 		<form method="post">
 		<select name="league" id="league">
 			<option value="ESEA">ESEA</option>
@@ -32,11 +32,11 @@
 		</form>
 		
 		<!-- Render Results Table -->
-		{% if teamlist|length != 0 %}
+		{% if errmsg|length != 0 %}
 			<h3>Teams in {{league}} {{division}}:</h3>
 			<table>
 			{% for n in teamlist %}
-				<tr><td>{{n}}</td></tr>
+				<tr><td>{{n.name}}</td></tr>
 			{% endfor %}
 			</table>
 		{% else %}
