@@ -22,6 +22,7 @@ from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response, jsonify
 import utils
+import re
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -211,7 +212,7 @@ GROUP BY TopPlayers.league;"""
   return render_template('league_compare.html', **context)
 
 
-#Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
+#Compare the performance of the chosen class between formats
 @app.route("/complex_query/format_compare/", methods=["POST", "GET"])
 def view_format_compare():
   result = {'errmsg':'', 'formatlist':[], 'class':""}
@@ -241,7 +242,53 @@ GROUP BY PF.format;"""
     
     return render_template('format_compare.html', **result)
     
+#Correlation between damage per minute of demoman and heals per minute of medic
+@app.route('/complex_query/correlation/', methods=["POST", "GET"])
+def view_correlation():
+  result = {'errmsg':"", 'cls1_name':"", 'cls1_avg':-1, 'cls1_dev':-1, 'cls2_name':"", 'cls2_avg':-1, 'cls2_dev':-1, 'correlation':-1}
+  if(request.method=='GET'):
+    return render_template('correlation.html', **result)
+  cls1 = request.form['class1']
+  cls2 = request.form['class2']
+  result['cls1_name'] = cls1
+  result['cls2_name'] = cls2
+  if(cls1=='medic'):
+    performance1 = 'healsPerMin'
+  else:
+    performance1 = 'damagePerMin'
+  if(cls2=='medic'):
+    performance2 = 'healsPerMin'
+  else:
+    performance2 = 'damagePerMin'
 
+  qrystr = """
+SELECT 	AVG(C1.performance) AS avg1, 
+        AVG(C2.performance) AS avg2, 
+        STDDEV(C1.performance) AS dev1, 
+        STDDEV(C2.performance) AS dev2, 
+        (AVG(C1.performance*C2.performance)-AVG(C1.performance)*AVG(C2.performance))/STDDEV(C1.performance)/STDDEV(C2.performance) AS cov_coeff
+FROM    (SELECT PlaysOn.team AS team, PlaysFormat.__PERFORMANCE1 AS performance
+        FROM PlaysOn,PlaysFormat 
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS1'
+        )AS C1,
+        (SELECT PlaysOn.team AS team, PlaysFormat.__PERFORMANCE2 AS performance
+        FROM PlaysOn,PlaysFormat 
+        WHERE PlaysOn.player=PlaysFormat.player AND PlaysFormat.class='__CLASS2'
+        ) AS C2
+WHERE C1.team=C2.team AND C1.__PERFORMANCE1 IS NOT NULL AND C2.__PERFORMANCE2 IS NOT NULL;
+"""
+  re.sub('__CLASS1', cls1, qrystr)
+  re.sub('__CLASS2', cls2, qrystr)
+  re.sub('__PERFORMANCE1', performance1, qrystr)
+  re.sub('__PERFORMANCE2', performance2, qrystr)
+ 
+  data = g.conn.execute(qrystr).fetchone()
+  result['cls1_avg'] = data[0]
+  result['cls2_avg'] = data[1]
+  result['cls1_dev'] = data[2]
+  result['cls2_dev'] = data[3]
+  result['correlation'] = data[4]
+ return render_template('correlation.html', **result)
 
 @app.route('/test/', methods=["POST", "GET"])
 def return_test():
