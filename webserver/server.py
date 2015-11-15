@@ -211,13 +211,13 @@ GROUP BY TopPlayers.league;"""
   return render_template('league_compare.html', **context)
 
 
+#Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
 @app.route("/complex_query/format_compare/", methods=["POST", "GET"])
 def view_format_compare():
   result = {'errmsg':'', 'formatlist':[]}
   if(request.method == "GET"):
     return render_template('format_compare.html', **result)
   else:
-    #Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
     cls = utils.sanitize(request.form['cls'])
     if(cls=='medic'):
       qrystr = """SELECT PF.format, AVG(PF.healsPerMin) as avg_HPM, AVG(CAST(PF.ubers AS decimal)/CAST(PF.drops AS decimal)) as avg_UD_rate
@@ -227,7 +227,7 @@ GROUP BY PF.format;"""
       formatlist_ptr = g.conn.execute(qrystr)
       for record in formatlist_ptr:
         print record
-        result['formatlist'].append(zip(['format', 'avg_hpm', 'avg_udrate'], [record[0], record[1], float(record[2])] ))
+        result['formatlist'].append(dict(zip(['format', 'avg_hpm', 'avg_udrate'], [record[0], record[1], float(record[2])] )))
     else:
       qrystr = """SELECT PF.format, AVG(PF.kad) as avg_KAD, AVG(PF.damagepermin) as avg_DPM
 FROM PlaysFormat AS PF
@@ -236,7 +236,7 @@ GROUP BY PF.format;"""
       formatlist_ptr = g.conn.execute(qrystr)
       for record in formatlist_ptr:
         print record
-        result['formatlist'].append(zip(['format', 'avg_kad', 'avg_dpm'], record))
+        result['formatlist'].append(dict(zip(['format', 'avg_kad', 'avg_dpm'], record)))
     
     return render_template('format_compare.html', **result)
     
