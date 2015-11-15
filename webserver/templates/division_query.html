@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title>League/Division Search - Awesome TF2 Data Scanner</title>
+	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
+</head>
+<body>
+	<table class="tblcenter">
+		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+		<br></td></tr>
+		<tr><td>
+		<tr><td><h2>Search for Teams by League and Division</h2></td></tr>
+		<!-- dropdown of class for selection and submit button -->
+		<form method="post">
+		<select name="league" id="league">
+			<option value="ESEA">ESEA</option>
+			<option value="UGC">UGC</option>
+			<option value="ETF2L">ETF2L</option>
+		</select>
+		<select name="division" id="division">
+			<option value="Invite">Invite</option>
+			<option value="Intermediate">Intermediate</option>
+			<option value="Open">Open</option>
+			<option value="Platinum">Platinum</option>
+			<option value="Gold">Gold</option>
+			<option value="Silver">Silver</option>
+			<option value="Steel">Steel</option>
+			<option value="Iron">Iron</option>
+			<option value="High">High</option>
+			<option value="Mid">Mid</option>
+		</select>
+		<button id="class_submit">Submit</button>
+		</form>
+		
+		<!-- Render Results Table -->
+		{% if teamlist|length != 0 %}
+			<h3>Teams in {{league}} {{division}}:</h3>
+			<table>
+			{% for n in teamlist %}
+				<tr><td>{{n}}</td></tr>
+			{% endfor %}
+			</table>
+		{% else %}
+			Sorry - there were no teams that matched your search.  Either you picked 
+			an invalid combination, or that data is not currently contained in our 
+			database.
+		{% endif %}
+		</td></tr>
+	</table>
+	<br><br><div id="return"><a href="/">Back to index</a></div>
+</body>
+</html>
