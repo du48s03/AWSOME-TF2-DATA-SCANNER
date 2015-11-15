@@ -299,6 +299,26 @@ WHERE C1.team=C2.team AND C1.performance IS NOT NULL AND C2.performance IS NOT N
     result['correlation'] = data[4]
     return render_template('correlation.html', **result)
 
+@app.route('/division_query/', methods = ["POST", "GET"])
+def view_division_query():
+  
+  result = {'errmsg':"", 'teamlist':[], 'league':"", 'division':""}
+  if(request.method=='GET'):
+    return render_template('division_query.html', **result)
+  else:
+    league = request.form['league']
+    division = request.form['division']
+    result['league'] = league
+    result['division'] = division
+    qrystr = """SELECT team.name
+FROM teamdivision, team
+WHERE teamdivision.league='"""+league+"""' AND teamdivision.divisio='"""+division+"""' AND team.id=teamdivision.team;"""
+    teamlist = g.conn.execute(qrystr)
+    for team in teamlist:
+      result['teamlist'].append({'name':team[0]})
+    return render_template('division_query.html', **result)
+
+
 @app.route('/test/', methods=["POST", "GET"])
 def return_test():
   """
