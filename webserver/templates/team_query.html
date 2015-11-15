@@ -66,6 +66,8 @@
 							}
 						} // close stat display loop
 						returnText+="</table>";
+						returnText+="<br>Average Heals Per Minute: " + stats.avg_hpm;
+						returnText+="<br>Average Damage Per Minute: " + stats.avg_dpm+"<br>";
 					} // close non-empty stat display
 					else{
 						errorText+="Error: a team with that name was not found";
