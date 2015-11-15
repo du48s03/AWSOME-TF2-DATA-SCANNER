@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>Damage Correlation - Awesome TF2 Data Scanner</title>
+	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
+	
+</head>
+<body>
+	<table class="tblcenter">
+		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+		<br></td></tr>
+		<tr><td>
+		Correlation between medic heals / class damage output<br>
+		Please choose 2 classes:<br>
+		<!-- form and table -->
+		<form method="post">
+		<select name="cls1" id="class1">
+			<option value="scout">Scout</option>
+			<option value="soldier">Soldier</option>
+			<option value="demoman">Demoman</option>
+			<option value="medic">Medic</option>
+		</select>
+		<select name="cls2" id="class2">
+			<option value="scout">Scout</option>
+			<option value="soldier">Soldier</option>
+			<option value="demoman">Demoman</option>
+			<option value="medic">Medic</option>
+		</select>
+		<button id="class_submit">Submit</button>
+		</form>
+		
+		<!-- Results table -->
+		<!-- 		class1	| class2
+			avg 	|		|
+			stddev	|		|
+			correlation
+			-->
+		{% if errmsg|length!=0 %}
+		<table>
+			<tr class="trcenter" style="text-transform:capitalize;"><td><!--empty--></td><td>{{cls1_name}}</td><td>{{cls2_name}}</td></tr>
+			<tr><td>Average</td><td>{{cls1_avg}}</td><td>{{cls2_avg}}</td></tr>
+			<tr><td>Standard Deviation</td><td>{{cls1_dev}}</td><td>{{cls2_dev}}</td></tr>
+			<tr><td>Correlation</td><td colspan="2">{{correlation}}</td></tr>
+		</table>
+		{% endif %}
+		Note: stats for medic are Heals Per Minute (HPM).  Stats for all other classes are Damage Per Minute (DPM).
+		</td></tr>
+	</table>
+</body>
+</html>
