@@ -34,7 +34,7 @@
 			stddev	|		|
 			correlation
 			-->
-		{% if errmsg|length!=0 %}
+		{% if errmsg|length==0 %}
 		<table>
 			<tr class="trcenter" style="text-transform:capitalize;"><td><!--empty--></td><td>{{cls1_name}}</td><td>{{cls2_name}}</td></tr>
 			<tr><td>Average</td><td>{{cls1_avg}}</td><td>{{cls2_avg}}</td></tr>
