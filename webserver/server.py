@@ -185,10 +185,9 @@ WHERE	p.id = F.player
     return render_template('player_stats.html')
 
  
-@app.route("/complex_query/", methods=["POST", "GET"])
-def view_complex_query():
+@app.route("/complex_query/league_compare", methods=["POST", "GET"])
+def view_league_compare():
   #keys(request.args) = ['attr', 'attr_val', 'entity', 'results']
-  print "hello"
   context = dict([])
   context['data']= []
   if(request.method == "POST"):
@@ -209,8 +208,38 @@ GROUP BY TopPlayers.league;"""
     for record in result:
       print record
       context['data'].append({'league':str(record[0]), 'val':str(record[1])})
-  return render_template('complex_query.html', **context)
+  return render_template('league_compare.html', **context)
 
+
+@app.route("/complex_query/format_compare/", methods=["POST", "GET"])
+def view_format_compare():
+  if(request.method == "GET"):
+    return render_template('format_compare.html')
+  else:
+    result = {'errmsg':'', 'formatlist':[]}
+    #Compare performance of medics between formats (Performance = HealsPerMin, Ubers, Drops)
+    cls = utils.sanitize(request.form['cls'])
+    if(cls=='medic'):
+      qrystr = """SELECT PF.format, AVG(PF.healsPerMin) as avg_HPM, AVG(PF.ubers/PF.drops) as avg_UD_rate
+FROM PlaysFormat PF
+WHERE class='"""+cls+"""' AND PF.drops <> 0
+GROUP BY PF.format;"""
+      formatlist_ptr = g.conn.execute(qrystr)
+      for record in formatlist_ptr:
+        print record
+        result['data'].append(zip(['format', 'avg_hpm', 'avg_udrate'], record))
+    else:
+      qrystr = """SELECT PF.format, AVG(PF.kad) as avg_KAD, AVG(PF.damagepermin) as avg_DPM
+FROM PlaysFormat AS PF
+WHERE class='"""+cls+"""' AND PF.deaths <> 0 
+GROUP BY PF.format;"""
+      formatlist_ptr = g.conn.execute(qrystr)
+      for record in formatlist_ptr:
+        print record
+        result['data'].append(zip(['format', 'avg_kad', 'avg_dpm'], record))
+    
+    return jsonify(result)
+    
 
 
 @app.route('/test/', methods=["POST", "GET"])
