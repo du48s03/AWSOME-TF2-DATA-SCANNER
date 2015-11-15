@@ -33,16 +33,18 @@
 		
 		<!-- Render Results Table -->
 		{% if errmsg|length == 0 %}
+			{% if teamlist|length > 0 %}
 			<h3>Teams in {{league}} {{division}}:</h3>
 			<table>
 			{% for n in teamlist %}
 				<tr><td>{{n.name}}</td></tr>
 			{% endfor %}
 			</table>
-		{% else %}
-			Sorry - there were no teams that matched your search.  Either you picked 
-			an invalid combination, or that data is not currently contained in our 
-			database.
+			{% else %}
+				Sorry - there were no teams that matched your search.  Either you picked 
+				an invalid combination, or that data is not currently contained in our 
+				database.
+			{% endif %}
 		{% endif %}
 		</td></tr>
 	</table>
