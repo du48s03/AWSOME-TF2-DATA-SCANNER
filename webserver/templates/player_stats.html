@@ -71,7 +71,6 @@
 					$("#medresults").html(medText);
 					$("#nonmedresults").html(nonMedText);
 					$("#error").html(errorText);
-					$("#form").html("Add another player:<br>"+document.getElementById("form").innerHTML);
 				}
 			});
 		});
@@ -94,7 +93,7 @@
 					<option value="name">Name</option>
 					<option value="id">Steam3ID</option>
 				</select>
-				<input type="text" name="attr_val" id="attr_val" value="" />
+				<input type="text" name="attr_val" id="attr_val" value="" onfocus="script:if(this.value!='') this.value=''" />
 				<button id="submit">Submit</button>
 			</div>
 		</td></tr>
