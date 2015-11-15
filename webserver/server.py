@@ -249,20 +249,22 @@ def view_correlation():
   if(request.method=='GET'):
     result['errmsg'] = "first access"
     return render_template('correlation.html', **result)
-  cls1 = request.form['class1']
-  cls2 = request.form['class2']
-  result['cls1_name'] = cls1
-  result['cls2_name'] = cls2
-  if(cls1=='medic'):
-    performance1 = 'healspermin'
   else:
-    performance1 = 'damagepermin'
-  if(cls2=='medic'):
-    performance2 = 'healspermin'
-  else:
-    performance2 = 'damagepermin'
-
-  qrystr = """
+    print "POST received"
+    cls1 = request.form['class1']
+    cls2 = request.form['class2']
+    result['cls1_name'] = cls1
+    result['cls2_name'] = cls2
+    if(cls1=='medic'):
+      performance1 = 'healspermin'
+    else:
+      performance1 = 'damagepermin'
+    if(cls2=='medic'):
+      performance2 = 'healspermin'
+    else:
+      performance2 = 'damagepermin'
+  
+    qrystr = """
 SELECT 	AVG(C1.performance) AS avg1, 
         AVG(C2.performance) AS avg2, 
         STDDEV(C1.performance) AS dev1, 
@@ -278,18 +280,19 @@ FROM    (SELECT PlaysOn.team AS team, PlaysFormat.__PERFORMANCE1 AS performance
         ) AS C2
 WHERE C1.team=C2.team AND C1.__PERFORMANCE1 IS NOT NULL AND C2.__PERFORMANCE2 IS NOT NULL;
 """
-  re.sub('__CLASS1', cls1, qrystr)
-  re.sub('__CLASS2', cls2, qrystr)
-  re.sub('__PERFORMANCE1', performance1, qrystr)
-  re.sub('__PERFORMANCE2', performance2, qrystr)
- 
-  data = g.conn.execute(qrystr).fetchone()
-  result['cls1_avg'] = data[0]
-  result['cls2_avg'] = data[1]
-  result['cls1_dev'] = data[2]
-  result['cls2_dev'] = data[3]
-  result['correlation'] = data[4]
-  return render_template('correlation.html', **result)
+    print "query string = "+ qrystr
+    re.sub('__CLASS1', cls1, qrystr)
+    re.sub('__CLASS2', cls2, qrystr)
+    re.sub('__PERFORMANCE1', performance1, qrystr)
+    re.sub('__PERFORMANCE2', performance2, qrystr)
+   
+    data = g.conn.execute(qrystr).fetchone()
+    result['cls1_avg'] = data[0]
+    result['cls2_avg'] = data[1]
+    result['cls1_dev'] = data[2]
+    result['cls2_dev'] = data[3]
+    result['correlation'] = data[4]
+    return render_template('correlation.html', **result)
 
 @app.route('/test/', methods=["POST", "GET"])
 def return_test():
