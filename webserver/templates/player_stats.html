@@ -17,63 +17,61 @@
 				success: function(stats){
 					var medOrig = document.getElementById("medresults").innerHTML;
 					var nonMedOrig = document.getElementById("nonmedresults").innerHTML;
-					console.log("returnText: "+returnTextOrig);
-					var medText = document.getElementById("medresults").innerHTML;
-					var returnText = document.getElementById("nonmedresults").innerHTML;
+					console.log("nonMedText:"+nonMedOrig + "."+nonMedOrig.length);
+					var medText = medOrig;
+					var nonMedText = nonMedOrig;
 					var errorText = "";
-					//var formText = "";
-					//returnText += JSON.stringify(stats) + "<br>"; // for debugging
+					//$("#debug").html(JSON.stringify(stats) + "<br>"); // for debugging
 					if(stats.data.length>0){
 						for(i=0;i<stats.data.length;i++){
 							console.log(stats.data[i].class);
 							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
-								if(medOrig==""){
-									returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
+								if(medOrig.length==0){
+									medText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
 								}
 								var row=stats.data[i];
-								if(medText==""){
-									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
-								}
-								returnText+=row.name+"</td><td>";
-								returnText+=row.class+"</td><td>";
-								returnText+=row.kills+"</td><td>";
-								returnText+=row.assists+"</td><td>";
-								returnText+=row.deaths+"</td><td>";
-								returnText+=row.kad+"</td><td>";
-								returnText+=row.healspermin+"</td><td>";
-								returnText+=row.ubers+"</td><td>";
-								returnText+=row.drops+"</td><td>";
-								returnText+=row.ubers/row.drops+"</td></tr>";
+								medText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								medText+=row.name+"</td><td>";
+								medText+=row.class+"</td><td>";
+								medText+=row.kills+"</td><td>";
+								medText+=row.assists+"</td><td>";
+								medText+=row.deaths+"</td><td>";
+								medText+=row.kad+"</td><td>";
+								medText+=row.healspermin+"</td><td>";
+								medText+=row.ubers+"</td><td>";
+								medText+=row.drops+"</td><td>";
+								medText+=row.ubers/row.drops+"</td></tr>";
 							}
 						} // close medic stat display loop
 						
 						for(i=0;i<stats.data.length;i++){
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
-								if(returnTextOrig==""){
-									console.log("adding player");
-									returnText+="<tr class=\"trright\"><td class=\"tdleft\">";
+								if(nonMedOrig.length==0){
+									console.log("adding headers for new player");
+									nonMedText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
 								}
-								if(returnText==""){
-									returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
-								}
-								returnText+=row.name+"</td><td>";
-								returnText+=row.class+"</td><td>";
-								returnText+=row.kills+"</td><td>";
-								returnText+=row.assists+"</td><td>";
-								returnText+=row.deaths+"</td><td>";
-								returnText+=row.kad+"</td><td>";
-								returnText+=row.damagepermin+"</td></tr>";
+								
+								console.log("adding player to existing");
+								nonMedText+="<tr class=\"trright\"><td class=\"tdleft\">";
+						
+								nonMedText+=row.name+"</td><td>";
+								nonMedText+=row.class+"</td><td>";
+								nonMedText+=row.kills+"</td><td>";
+								nonMedText+=row.assists+"</td><td>";
+								nonMedText+=row.deaths+"</td><td>";
+								nonMedText+=row.kad+"</td><td>";
+								nonMedText+=row.damagepermin+"</td></tr>";
 							}
 						} // close stat display loop
-						//returnText+="</table>";
-						returnText+="Add another player: "
 					} // close non-empty stat display
 					else{
 						errorText+="Error: a player with that name/ID was not found";
 					}
-					$("#nonmedresults").html(returnText);
+					$("#medresults").html(medText);
+					$("#nonmedresults").html(nonMedText);
 					$("#error").html(errorText);
+					$("#form").html("Add another player:<br>"+document.getElementById("form").innerHTML);
 				}
 			});
 		});
@@ -87,6 +85,7 @@
 		
 		<tr><td><h2>Search for Players</h2></td></tr>
 		<tr><td>
+			<!--<div id="debug"></div>-->
 			<table id="medresults"></table>
 			<table id="nonmedresults"></table><br>
 			<div id="error"><!-- error messages go here --></div>
@@ -95,7 +94,7 @@
 					<option value="name">Name</option>
 					<option value="id">Steam3ID</option>
 				</select>
-				<input type="text" name="attr_val" id="attr_val"/>
+				<input type="text" name="attr_val" id="attr_val" value="" />
 				<button id="submit">Submit</button>
 			</div>
 		</td></tr>
