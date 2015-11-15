@@ -288,7 +288,7 @@ WHERE C1.team=C2.team AND C1.__PERFORMANCE1 IS NOT NULL AND C2.__PERFORMANCE2 IS
   result['cls1_dev'] = data[2]
   result['cls2_dev'] = data[3]
   result['correlation'] = data[4]
- return render_template('correlation.html', **result)
+  return render_template('correlation.html', **result)
 
 @app.route('/test/', methods=["POST", "GET"])
 def return_test():
