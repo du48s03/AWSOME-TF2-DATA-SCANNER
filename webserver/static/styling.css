@@ -22,7 +22,7 @@ table.tblcontentblu {
 	margin-left: auto;
 	margin-right: auto;
 	width: 80%;
-	background: rgba(91,122,140,1); /* TF2 light blue */
+	background: rgba(91,122,140,0.8); /* TF2 light blue */
 	padding: 10px;
 	border: 0px;
 }
@@ -31,7 +31,7 @@ table.tblcontentred {
 	margin-left: auto;
 	margin-right: auto;
 	width: 80%;
-	background: rgba(189,58,58,1); /* TF2 light red */
+	background: rgba(189,58,58,0.8); /* TF2 light red */
 	padding: 10px;
 	border: 0px;
 }
