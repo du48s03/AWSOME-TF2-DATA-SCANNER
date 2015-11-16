@@ -145,15 +145,21 @@ WHERE PT.team="""+str(teamID)+""" AND P.id=PT.player AND PF.player=PT.player;"""
         FROM PlaysOn,PlaysFormat 
         WHERE PlaysOn.player=PlaysFormat.player AND PlaysOn.team = %s AND PlaysFormat.damagepermin IS NOT NULL
   """ 
-    avg_dpm = float(g.conn.execute(qrystr, (str(teamID)) ).fetchone()[0] )
+    try:
+      avg_dpm = float(g.conn.execute(qrystr, (str(teamID)) ).fetchone()[0] )
+      result['stats']['avg_dpm'] = avg_dpm
+    except:
+      result['errmsg']='insufficient data'
     qrystr = """
     SELECT  AVG(PlaysFormat.healspermin) AS avg_hpm
         FROM PlaysOn,PlaysFormat 
         WHERE PlaysOn.player=PlaysFormat.player AND PlaysOn.team = %s AND PlaysFormat.healspermin IS NOT NULL
   """ 
-    avg_hpm = float(g.conn.execute(qrystr, (str(teamID)) ).fetchone()[0] ) 
-    result['stats']['avg_dpm'] = avg_dpm
-    result['stats']['avg_hpm'] = avg_hpm
+    try:
+      avg_hpm = float(g.conn.execute(qrystr, (str(teamID)) ).fetchone()[0] ) 
+      result['stats']['avg_hpm'] = avg_hpm
+    except:
+      result['errmsg']='insufficient data'
     
     return jsonify(result)    
 

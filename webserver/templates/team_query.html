@@ -8,7 +8,7 @@
 		<tr class="content"><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
 		<br></td></tr>
 		
-		<tr class="content"><td><h2>Search for Teams</h2></td></tr>
+		<tr class="content"><td class="tdcenter"><h2>Search for Teams</h2></td></tr>
 		<tr class="content"><td class="tdcenter">
 			<div id="form">
 				<input type="text" name="attr_val" id="attr_val" placeholder="Enter Team Name" />
@@ -66,10 +66,13 @@
 						returnText+="</table>";
 						returnText+="<table class=\"resultsblu\"><tr class=\"trheading\"><td colspan=\"2\">Team Stats</td></tr>";
 						returnText+="<tr><td>Average Heals Per Minute</td><td>" + stats.stats.avg_hpm + "</td></tr>";
-						returnText+="<tr><td>Average Damage Per Minute</td><td>" + (stats.stats.avg_dpm).toFixed(1) +"</td></tr></table>";
+						returnText+="<tr><td>Average Damage Per Minute</td><td>" + stats.stats.avg_dpm.toFixed(1) +"</td></tr></table>";
 					} // close non-empty stat display
 					else{
-						errorText+="Error: a team with that name was not found";
+						if(stats.errmsg=="insufficient data"){
+							errorText+="Sorry.  That team does not have sufficient data to display.";
+						}
+						else{ errorText+="Error: a team with that name was not found"; }
 					}
 					$("#results").html(returnText);
 					$("#error").html(errorText);
