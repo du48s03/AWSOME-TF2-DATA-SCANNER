@@ -163,12 +163,12 @@ def view_player_stats():
     attr = request.form['attr']
     if(attr == 'name'):
       qrystr = """
-SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
+SELECT DISTINCT P.name, F.class, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
 FROM player as P, playsformat as F
 WHERE	p.id = F.player
 	AND p.name = %s;"""
     elif(attr == 'id'):
-      qrystr =  """SELECT P.name, F.class, F.format, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
+      qrystr =  """SELECT DISTINCT P.name, F.class, F.kills, F.assists, F.deaths, F.kad, F.healspermin, F.damagepermin, F.ubers, F.drops
 FROM player as P, playsformat as F
 WHERE	p.id = F.player
 	AND p.id = %s;"""
@@ -183,15 +183,14 @@ WHERE	p.id = F.player
       print r
       result['data'].append({'name':r[0],
                              'class':r[1],
-                             'format':r[2],
-                             'kills':r[3],
-                             'assists':r[4],
-                             'deaths':r[5],
-                             'kad':r[6],
-                             'healspermin':r[7],
-                             'damagepermin':r[8],
-                             'ubers':r[9],
-                             'drops':r[10]})
+                             'kills':r[2],
+                             'assists':r[3],
+                             'deaths':r[4],
+                             'kad':r[5],
+                             'healspermin':r[6],
+                             'damagepermin':r[7],
+                             'ubers':r[8],
+                             'drops':r[9]})
     return jsonify(result)
   else: 
     return render_template('player_stats.html')
