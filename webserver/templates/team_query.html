@@ -4,25 +4,24 @@
 	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
 </head>
 <body>
-	<table class="tblcenter">
-		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+	<table class="tblcontentblu">
+		<tr class="content"><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
 		<br></td></tr>
 		
-		<tr><td><h2>Search for Teams</h2></td></tr>
-		<tr><td>
-			<div id="results"><!-- search results go here --></div><br>
-			<div id="error"><!-- error messages go here --></div>
+		<tr class="content"><td><h2>Search for Teams</h2></td></tr>
+		<tr class="content"><td class="tdcenter">
 			<div id="form">
 				<input type="text" name="attr_val" id="attr_val" placeholder="Enter Team Name" />
 				<button id="submit">Submit</button>
 			</div>
+			<div id="results"><!-- search results go here --></div><br>
+			<div id="error"><!-- error messages go here --></div>
+			<br>
 		</td></tr>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
-		console.log("ready script read");
 		$("#submit").click(function(){
-			console.log("submit button clicked");
 			$.ajax({
 				type: "POST",
 				url: "/team_query/",
@@ -31,9 +30,8 @@
 				success: function(stats){
 					var returnText = "";
 					var errorText = "";
-					returnText += JSON.stringify(stats) + "<br>"; // for debugging
 					if(stats.errmsg==""){
-						returnText+="<table><tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
+						returnText+="<table class=\"resultsblu\"><tr class=\"trheading\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td><span title=\"(Kills+Assists)/Deaths\">KA/D</span></td><td><span title=\"Heals Per Minute\">HPM</span></td><td>Ubers</td><td>Drops</td><td><span title=\"Ubers/Drops\">U/D</td></tr>";
 						for(i=0;i<stats.playerlist.length;i++){
 							if(stats.playerlist[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
 								var row=stats.playerlist[i];
@@ -47,11 +45,11 @@
 								returnText+=row.healspermin+"</td><td>";
 								returnText+=row.ubers+"</td><td>";
 								returnText+=row.drops+"</td><td>";
-								returnText+=row.ubers/row.drops+"</td></tr>";
+								returnText+=(row.ubers/row.drops).toFixed(1)+"</td></tr>";
 							}
 						} // close medic stat display loop
 						
-						returnText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
+						returnText+="<tr class=\"trheading\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td><span title=\"(Kills+Assists)/Deaths\">KA/D</span></td><td><span title=\"Damage Per Minute\">DPM</span></td></tr>";
 						for(i=0;i<stats.playerlist.length;i++){
 							var row=stats.playerlist[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
@@ -66,8 +64,9 @@
 							}
 						} // close stat display loop
 						returnText+="</table>";
-						returnText+="<br>Average Heals Per Minute: " + stats.stats.avg_hpm;
-						returnText+="<br>Average Damage Per Minute: " + stats.stats.avg_dpm+"<br>";
+						returnText+="<table class=\"resultsblu\"><tr class=\"trheading\"><td colspan=\"2\">Team Stats</td></tr>";
+						returnText+="<tr><td>Average Heals Per Minute</td><td>" + stats.stats.avg_hpm + "</td></tr>";
+						returnText+="<tr><td>Average Damage Per Minute</td><td>" + (stats.stats.avg_dpm).toFixed(1) +"</td></tr></table>";
 					} // close non-empty stat display
 					else{
 						errorText+="Error: a team with that name was not found";

@@ -5,9 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
-		console.log("ready script read");
 		$("#submit").click(function(){
-			console.log("submit button clicked");
 			$.ajax({
 				type: "POST",
 				url: "/player_stats/",
@@ -17,17 +15,14 @@
 				success: function(stats){
 					var medOrig = document.getElementById("medresults").innerHTML;
 					var nonMedOrig = document.getElementById("nonmedresults").innerHTML;
-					console.log("nonMedText:"+nonMedOrig + "."+nonMedOrig.length);
 					var medText = medOrig;
 					var nonMedText = nonMedOrig;
 					var errorText = "";
-					//$("#debug").html(JSON.stringify(stats) + "<br>"); // for debugging
 					if(stats.data.length>0){
 						for(i=0;i<stats.data.length;i++){
-							console.log(stats.data[i].class);
 							if(stats.data[i].class=="medic"){ // display first, include HealsPerMin, Ubers, and Drops
 								if(medOrig.length==0){
-									medText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>HPM</td><td>Ubers</td><td>Drops</td><td>U/D</td></tr>";
+									medText+="<tr class=\"trheading\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td><span title=\"(Kills+Assists)/Deaths\">KA/D</span></td><td><span title=\"Heals Per Minute\">HPM</span></td><td>Ubers</td><td>Drops</td><td><span title=\"Ubers/Drops\">U/D</span></td></tr>";
 								}
 								var row=stats.data[i];
 								medText+="<tr class=\"trright\"><td class=\"tdleft\">";
@@ -40,7 +35,7 @@
 								medText+=row.healspermin+"</td><td>";
 								medText+=row.ubers+"</td><td>";
 								medText+=row.drops+"</td><td>";
-								medText+=row.ubers/row.drops+"</td></tr>";
+								medText+=(row.ubers/row.drops).toFixed(1)+"</td></tr>";
 							}
 						} // close medic stat display loop
 						
@@ -48,11 +43,9 @@
 							var row=stats.data[i];
 							if(row.class!="medic"){ // show DPM, hide ubers and drops
 								if(nonMedOrig.length==0){
-									console.log("adding headers for new player");
-									nonMedText+="<tr class=\"trcenter\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td>KA/D</td><td>DPM</td></tr>";
+									nonMedText+="<tr class=\"trheading\"><td>Name</td><td>Class</td><td>Kills</td><td>Assists</td><td>Deaths</td><td><span title=\"(Kills+Assists)/Deaths\">KA/D</span></td><td><span title=\"Damage Per Minute\">DPM</span></td></tr>";
 								}
 								
-								console.log("adding player to existing");
 								nonMedText+="<tr class=\"trright\"><td class=\"tdleft\">";
 						
 								nonMedText+=row.name+"</td><td>";
@@ -66,7 +59,7 @@
 						} // close stat display loop
 					} // close non-empty stat display
 					else{
-						errorText+="Error: a player with that name/ID was not found";
+						errorText+="Error: a player with that name/ID was not found<br><br>";
 					}
 					$("#medresults").html(medText);
 					$("#nonmedresults").html(nonMedText);
@@ -78,18 +71,17 @@
 	</script>
 </head>
 <body>
-	<table class="tblcenter">
-		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+	<table class="tblcontentblu">
+		<tr class="content"><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
 		<br></td></tr>
 		
-		<tr><td><h2>Search for Players</h2></td></tr>
-		<tr><td>
-			<!--<div id="debug"></div>-->
-			<table id="medresults"></table>
-			<table id="nonmedresults"></table><br>
+		<tr class="content"><td><h2>Search for Players</h2></td></tr>
+		<tr class="content"><td class="tdcenter">
+			<table class="resultsblu" id="medresults"></table>
+			<table class="resultsblu" id="nonmedresults"></table><br>
 			<div id="error"><!-- error messages go here --></div>
 			<div id="form">
-				<select name="attr" id="attr">
+				Add a player to view: &nbsp;&nbsp;<select name="attr" id="attr">
 					<option value="name">Name</option>
 					<option value="id">Steam3ID</option>
 				</select>
@@ -97,7 +89,7 @@
 				<button id="submit">Submit</button>
 			</div>
 		</td></tr>
-		<tr><td><a href="/player_stats">Clear all</a></td></tr>
+		<tr class="content"><td class="tdcenter"><a href="/player_stats">Clear all players</a></td></tr>
 	</table>
 	<br><br><div id="return"><a href="/">Back to index</a></div>
 </body>

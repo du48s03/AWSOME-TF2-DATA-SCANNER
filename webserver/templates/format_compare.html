@@ -2,14 +2,14 @@
 <head>
 	<title>Format Comparison - Awesome TF2 Data Scanner</title>
 	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
-	
 </head>
 <body>
-	<table class="tblcenter">
-		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+	<table class="tblcontentred">
+		<tr class="content"><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
 		<br></td></tr>
-		<tr><td>
-			Compare performance between formats by class<br>
+		<tr class="content"><td class="tdcenter"><h2>
+			Compare performance between formats by class</h2></td></tr>
+		<tr class="content"><td class="tdcenter">
 		<form method="post">
 		<select name="cls" id="class">
 			<option value="scout">Scout</option>
@@ -27,18 +27,18 @@
 		
 		<!-- Results table -->
 		{% if formatlist|length!=0 %}
-			<table>
+			<table class="resultsred">
 			{% if formatlist[0].avg_hpm %}
-				<tr><td colspan="3" class="tdcenter">Medic Performance By Format</td></tr>
-				<tr><td>Format</td><td>Average Heals Per Min</td><td>Average Ubers/Drops</td></tr>
+				<tr class="trheadingred"><td colspan="3" class="tdcenter"><h3>Medic Performance By Format</h3></td></tr>
+				<tr class="trheadingred"><td class="tdcenter">Format</td><td class="tdcenter"><span title="Average Heals Per Minute">Avg HPM</span></td><td class="tdcenter"><span title="Average Ubers/Drops">Avg U/D</span></td></tr>
 				{% for n in formatlist %}
-					<tr><td>{{n.format}}</td><td>{{n.avg_hpm}}</td><td>{{n.avg_udrate}}</td></tr>
+					<tr class="trright"><td class="tdleft">{{n.format}}</td><td>{{n.avg_hpm}}</td><td>{{n.avg_udrate|round(1,'common')}}</td></tr>
 				{% endfor %}
 			{% else %}
-				<tr><td colspan="3" class="tdcenter" style="text-transform:capitalize;">{{class}} Performance By Format</td></tr>
-				<tr><td>Format</td><td>Average Damage Per Min</td><td>Average Kills+Assists/Death</td></tr>
+				<tr class="trheadingred"><td colspan="3" class="tdcenter" style="text-transform:capitalize;"><h3>{{class}} Performance By Format</h3></td></tr>
+				<tr class="trheadingred"><td class="tdcenter">Format</td><td class="tdcenter"><span title="Average Damage Per Min">Avg DPM</span></td><td class="tdcenter"><span title="Average Kills+Assists/Death">Avg KA/D</span></td></tr>
 				{% for n in formatlist %}
-					<tr><td>{{n.format}}</td><td>{{n.avg_dpm}}</td><td>{{n.avg_kad}}</td></tr>
+					<tr class="trright"><td class="tdleft">{{n.format}}</td><td>{{n.avg_dpm|round(1,'common')}}</td><td>{{n.avg_kad|round(1,'common')}}</td></tr>
 				{% endfor %}
 			{% endif %}
 			</table>

@@ -1,35 +1,99 @@
 body{
 	text-align: center;
-	background-color: #F6E7DE /* TF2 light tan */
-	/*-moz-background-size: cover;
-	-webkit-background-size: cover;
-	background-size: cover;
-	background-position: top center !important;
-	background-repeat: no-repeat !important;
-	background-attachment: fixed;*/
+	background-color: #F6E7DE; /* TF2 light tan */
 }
 
-table,tr,td {
-	border: 1px solid black;
+table{
+	padding: 10px;
+	background: rgba(246,231,222,1); /* TF2 light tan */
+}
+
+tr,td {
 	padding: 10px;
 }
 
 table.tblcenter {
 	margin-left: auto;
 	margin-right: auto;
+	padding: 10px;
+}
+
+table.tblcontentblu {
+	margin-left: auto;
+	margin-right: auto;
 	width: 80%;
+	background: rgba(91,122,140,1); /* TF2 light blue */
+	padding: 10px;
+	border: 0px;
+}
+
+table.tblcontentred {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	background: rgba(189,58,58,1); /* TF2 light red */
+	padding: 10px;
+	border: 0px;
+}
+
+table.resultsblu {
+	margin-left: auto;
+	margin-right: auto;
+	border:1px;
+	padding: 10px;
+	border-color:rgba(56,92,120,0.8); /* TF2 blue */
+}
+
+table.resultsred {
+	margin-left: auto;
+	margin-right: auto;
+	border:1px;
+	padding:10px;
+	border-color:rgba(157,48,47,0.8); /* TF2 red */
+}
+
+td.titlepage {
+	text-align: center;
+	padding: 10px;
+	border:4px;
+	border-style: groove;
+	border-top-color: #9D302F;
+	border-left-color: #9D302F;
+	border-bottom-color: #385C78;
+	border-right-color: #385C78;
+}
+
+tr.trheading{
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+	background: rgba(56,92,120,0.6); /* TF2 blue */
+	padding: 10px;
+}
+
+tr.trheadingred{
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+	background: rgba(157,48,47,0.6); /* TF2 blue */
+	padding: 10px;
 }
 
 tr.trcenter{
 	text-align: center;
+	padding: 10px;
 }
 
 tr.trright{
 	text-align:right;
+	background-color: #F6E7DE; /* TF2 light tan */
+	padding: 10px;
 }
 
 td.tdleft{
 	text-align:left;
+	background-color: #F6E7DE; /* TF2 light tan */
+	padding:10px;
 }
 
 td.tdcenter{
@@ -38,12 +102,17 @@ td.tdcenter{
 }
 
 td.tdblue{
-	background: rgba(91,122,140,0.8); /* TF2 med blue */
+	background: rgba(91,122,140,0.8); /* TF2 light blue */
 	padding: 10px;
 }
 
 td.tdred{
-	background: rgba(189,58,58,0.8);
+	background: rgba(189,58,58,0.8); /* TF2 light red */
+	padding: 10px;
+}
+
+tr.content {
+	background-color: #F6E7DE; /* TF2 light tan */
 	padding: 10px;
 }
 

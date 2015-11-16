@@ -2,15 +2,14 @@
 <head>
 	<title>Damage Correlation - Awesome TF2 Data Scanner</title>
 	<link rel="stylesheet" type="text/css" href="/static/styling.css" />
-	
 </head>
 <body>
-	<table class="tblcenter">
-		<tr><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
+	<table class="tblcontentred">
+		<tr class="content"><td class="tdcenter"><h1>Team Fortress 2 Data Scanner</h1>
 		<br></td></tr>
-		<tr><td>
-		Correlation between medic heals / class damage output<br>
-		Please choose 2 classes:<br>
+		<tr class="content"><td class="tdcenter"><h2>
+		Correlation between medic heals / class damage output</h2></td></tr>
+		<tr class="content"><td class="tdcenter">Please choose 2 classes:<br>
 		<!-- form and table -->
 		<form method="post">
 		<select name="cls1" id="class1">
@@ -35,14 +34,15 @@
 			correlation
 			-->
 		{% if errmsg|length==0 %}
-		<table>
-			<tr class="trcenter" style="text-transform:capitalize;"><td><!--empty--></td><td>{{cls1_name}}</td><td>{{cls2_name}}</td></tr>
-			<tr><td>Average</td><td>{{cls1_avg}}</td><td>{{cls2_avg}}</td></tr>
-			<tr><td>Standard Deviation</td><td>{{cls1_dev}}</td><td>{{cls2_dev}}</td></tr>
-			<tr><td>Correlation</td><td colspan="2">{{correlation}}</td></tr>
+		<table class="resultsred">
+			<tr class="trheadingred" style="text-transform:capitalize;"><td><!--empty--></td><td class="tdcenter">{{cls1_name}}</td><td class="tdcenter">{{cls2_name}}</td></tr>
+			<tr class="content"><td style="font-size:18px;font-weight=bold;">Average</td><td>{{cls1_avg|round(2,'common')}}</td><td>{{cls2_avg|round(2,'common')}}</td></tr>
+			<tr class="content"><td style="font-size:18px;font-weight=bold;">Standard Deviation</td><td>{{cls1_dev|round(2,'common')}}</td><td>{{cls2_dev|round(2,'common')}}</td></tr>
+			<tr><td style="font-size:18px;font-weight=bold;">Correlation*</td><td class="tdcenter" colspan="2">{{correlation|round(5,'common')}}</td></tr>
 		</table>
 		{% endif %}
-		Note: stats for medic are Heals Per Minute (HPM).  Stats for all other classes are Damage Per Minute (DPM).
+		<br>Note: stats for medic are Heals Per Minute (HPM).  Stats for all other classes are Damage Per Minute (DPM).<br><br>
+		*Correlations between the same class may not be exactly 1 due to variable numbers of players on the team and low sample size.
 		</td></tr>
 	</table>
 	<br><br><div id="return"><a href="/">Back to index</a></div>
