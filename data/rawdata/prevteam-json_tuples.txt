@@ -1,0 +1,42 @@
+b4nny
+{
+	[
+	{name:"froyotech",league:"ESEA",division:"invite",format:"6v6",season:19}
+	{name:"froyotech",league:"ESEA",division:"invite",format:"6v6",season:18}
+	{name:"Ginyu Force",league:"UGC",division:"platinum",format:"highlander",season:14}
+	]
+}
+
+nursey
+{
+[
+	{name:"Getawhale Fanclub",league:"ESEA",division:"intermediate",format:"6v6",season:19}
+	{name:"Kids Next Door",league:"UGC",division:"platinum",format:"highlander",season:14}
+	{name:"Just Kidding",league:"UGC",division:"platinum",format:"highlander",season:13}
+]
+}
+
+enigma
+{
+[
+	{name:"Classic Mixup",league:"ESEA",division:"invite",format:"6v6",season:17}
+	{name:"Classic Mixup",league:"ESEA",division:"invite",format:"6v6",season:16}
+	{name:"MenaceToSociety",league:"UGC",division:"platinum",format:"highlander",season:13}
+]
+}
+
+Voll
+{
+[
+	{name:"-bird noises-",league:"ESEA",division:"open",format:"6v6",season:19}
+	{name:"Open Water Door",league:"ESEA",division:"open",format:"6v6",season:15}
+	{name:"Kappa Mikey",league:"UGC",division:"silver",format:"highlander",season:15}
+]
+}
+
+duwatna
+{
+[
+	{name:"froyotech",league:"ESEA",division:"invite",format:"6v6",season:18}
+	{name:"Street Hoops eSports",league:"ESEA",division:"invite",format:"6v6",season:16}
+	{name:"Street Hoops eSports",league:"UGC",division:"platinum",format:"highlander",season:13}
